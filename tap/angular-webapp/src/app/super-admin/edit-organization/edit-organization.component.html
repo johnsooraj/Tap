@@ -1,0 +1,84 @@
+<div class="profile-container">
+  <div class="profile-wraper">
+    <div class="profile-cover">
+      <img class="profile-cover-img" src="{{oragnizationModel.coverPhoto}}">
+    </div>
+    <div class="profile-picture">
+      <img class="profile-profilepic-img" src="{{oragnizationModel.profilePhoto}}">
+    </div>
+    <div class="profile-body">
+      <h3 class="profile-title">{{oragnizationModel.organizationName}}</h3>
+      <div class="profile-edit-panel">
+        <button (click)="openResetpasswordModal(updatecontent, oragnizationModel.organizationId)" type="button"
+          class="btn btn-secondary">Reset
+          Organization Admin
+          Password</button>
+      </div>
+      <div class="profile-body-wrapper">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="profile-details">
+              <dl class="row">
+                <dt class="col-sm-3">Website</dt>
+                <dd class="col-sm-9" *ngIf="checkForAddress()">{{oragnizationModel.organizationAddress.website}}</dd>
+
+                <dt class="col-sm-3">Contact Number</dt>
+                <dd class="col-sm-9" *ngIf="checkForAddress()">{{oragnizationModel.organizationAddress.contact_number}}
+                </dd>
+
+                <dt class="col-sm-3">Description</dt>
+                <dd class="col-sm-9" *ngIf="checkForAddress()">{{oragnizationModel.organizationAddress.description}}
+                </dd>
+
+                <dt class="col-sm-3">Authority Name</dt>
+                <dd class="col-sm-9" *ngIf="checkForAddress()">{{oragnizationModel.organizationAddress.authorityName}}
+                </dd>
+
+                <dt class="col-sm-3">Members</dt>
+                <dd class="col-sm-9">
+                  <dl class="row">
+                    <dt class="col-sm-4">Total</dt>
+                    <dd class="col-sm-8" *ngIf="checkForAddress()">{{oragnizationModel.members.length}}.</dd>
+                  </dl>
+                  <dl class="row">
+                    <dt class="col-sm-4">Administrator</dt>
+                    <dd class="col-sm-8" *ngIf="checkForAddress()">1.</dd>
+                  </dl>
+                </dd>
+              </dl>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="profile-details">
+              <div class="row">
+                <div class="col-12">
+                  <ul class="list-group">
+                    <li *ngFor="let user of oragnizationModel.members" class="list-group-item">
+                      <div *ngIf="user.userData != null; then content else other_content">here is ignored</div>
+                      <ng-template #content>User ({{user.userData.email}})</ng-template>
+                      <ng-template #other_content>Administrator</ng-template>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #updatecontent let-modal>
+  <div class="modal-body">
+    <div class="confirmation-message">
+      <span>Password will be replaced.<br>Do You Wish to Proceed?</span>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="modal-button-wrapper">
+      <button type="button" class="btn customer-category-btn" (click)="modal.close('cancel')">Cancel</button>
+      <button type="button" class="btn customer-category-btn" (click)="modal.close('update')">Update</button>
+    </div>
+  </div>
+</ng-template>

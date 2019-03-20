@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <beans:beans xmlns="http://www.springframework.org/schema/security" 
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+	http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd"> -->
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/security
+http://www.springframework.org/schema/security/spring-security.xsd">
+	<!-- <beans:import resource="../resources/spring-datasource.xml" /> -->
+	<beans:import resource="spring-datasource.xml" />
+	<http>
+		<intercept-url pattern="/admin**" access="hasRole('ROLE_ADMIN')" />
+		<!-- for testing allow all -->
+		<intercept-url pattern="/user**" access="permitAll" />
+		<intercept-url pattern="/api**" access="permitAll" />
+		<intercept-url pattern="/test**" access="permitAll" />
+		<intercept-url pattern="/customer**" access="hasRole('ROLE_CUSTOMER')" />
+		<!-- <access-denied-handler error-page="/404page"></access-denied-handler> -->
+		<form-login login-page='/login' login-processing-url="/j_spring_security_check"
+			username-parameter="username" password-parameter="password"
+			default-target-url="/redirect" authentication-failure-url="/login?authfailed" />
+		<logout logout-url="j_spring_security_logout"
+			invalidate-session="true" logout-success-url="/logout"
+			delete-cookies="JSESSIONID"></logout>
+		<session-management invalid-session-url="/login?sessionout1"
+			session-fixation-protection="migrateSession">
+			<concurrency-control max-sessions="3"
+				expired-url="/login?sessionout" />
+		</session-management>
+		<csrf disabled="true" />
+	</http>
+	<authentication-manager>
+		<authentication-provider> <user-service> <user name="admin" password="admin" 
+			authorities="ROLE_ADMIN" /> </user-service> </authentication-provider> 
+		<authentication-provider>
+			<password-encoder ref="encoder" />
+			<jdbc-user-service data-source-ref="dataSource"
+				users-by-username-query="select phone as username,email as password,status as enabled from users where BINARY phone"
+				authorities-by-username-query="select phone as username, email as role from users where BINARY phone =? " />
+		</authentication-provider>
+
+	</authentication-manager>
+
+	<beans:bean id="encoder"
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+		<beans:constructor-arg name="strength" value="10" />
+	</beans:bean>
+	<!-- <beans:bean id="logoutSuccessHandler" class="com.neosyn.security.CustomLogoutSuccessHandler"> 
+		<beans:property name="useReferer" value="true" /> </beans:bean> -->
+	<beans:bean name="/PersistenceConfig"
+		class="com.cyspan.tap.appconfig.PersistenceConfig" />
+
+	<!-- Reading Property files config -->
+
+</beans:beans>
+

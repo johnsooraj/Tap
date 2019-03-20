@@ -1,0 +1,12 @@
+.scrollTable {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.scrollTable tbody {
+  height: calc(100vh - 125px);
+}
+
+.scrollTable th, .scrollTable td {
+  width: 30%;
+}

@@ -1,0 +1,186 @@
+{
+  "user": [
+    {
+      "firstname": "developer@",
+      "lastname": "letztap.com",
+      "phone": "988776655443",
+      "email": "developer.letztap@gmail.com",
+      "age": 25,
+      "gender": "male",
+      "password": "admin",
+      "username": "admin"
+    }
+  ],
+  "security-roles": [
+    {
+      "role": "SuperAdministrator",
+      "role_id": "100"
+    },
+    {
+      "role": "Administrator",
+      "role_id": "101"
+    },
+    {
+      "role": "SubAdministrator",
+      "role_id": "102"
+    },
+    {
+      "role": "RegistredUser",
+      "role_id": "103"
+    },
+    {
+      "role": "GuestUser",
+      "role_id": "104"
+    }
+  ],
+  "security-permission": [
+    {
+      "permission": "full_customer",
+      "permission_id": "100"
+    },
+    {
+      "permission": "view_customer",
+      "permission_id": "101"
+    },
+    {
+      "permission": "add_customer",
+      "permission_id": "102"
+    },
+    {
+      "permission": "delete_customer",
+      "permission_id": "103"
+    },
+    {
+      "permission": "edit_customer",
+      "permission_id": "104"
+    },
+    {
+      "permission": "view_result",
+      "permission_id": "111"
+    },
+    {
+      "permission": "download_result",
+      "permission_id": "112"
+    },
+    {
+      "permission": "full_feedback",
+      "permission_id": "120"
+    },
+    {
+      "permission": "view_feedback",
+      "permission_id": "121"
+    },
+    {
+      "permission": "edit_feedback",
+      "permission_id": "122"
+    },
+    {
+      "permission": "delete_feedback",
+      "permission_id": "123"
+    },
+    {
+      "permission": "add_feedback",
+      "permission_id": "124"
+    },
+    {
+      "permission": "full_poll",
+      "permission_id": "130"
+    },
+    {
+      "permission": "view_poll",
+      "permission_id": "131"
+    },
+    {
+      "permission": "edit_poll",
+      "permission_id": "132"
+    },
+    {
+      "permission": "delete_poll",
+      "permission_id": "133"
+    },
+    {
+      "permission": "add_poll",
+      "permission_id": "134"
+    },
+    {
+      "permission": "full_notice",
+      "permission_id": "140"
+    },
+    {
+      "permission": "view_notice",
+      "permission_id": "141"
+    },
+    {
+      "permission": "edit_notice",
+      "permission_id": "142"
+    },
+    {
+      "permission": "delete_notice",
+      "permission_id": "143"
+    },
+    {
+      "permission": "add_notice",
+      "permission_id": "144"
+    },
+    {
+      "permission": "full_profile",
+      "permission_id": "150"
+    },
+    {
+      "permission": "view_profile",
+      "permission_id": "151"
+    },
+    {
+      "permission": "edit_profile",
+      "permission_id": "152"
+    },
+    {
+      "permission": "delete_profile",
+      "permission_id": "153"
+    },
+    {
+      "permission": "add_profile",
+      "permission_id": "154"
+    },
+    {
+      "permission": "customer_management",
+      "permission_id": "160"
+    },
+    {
+      "permission": "subscription_tool",
+      "permission_id": "161"
+    },
+    {
+      "permission": "view_download_result",
+      "permission_id": "162"
+    },
+    {
+      "permission": "view_edit_profile",
+      "permission_id": "163"
+    },
+    {
+      "permission": "administrator",
+      "permission_id": "164"
+    },
+    {
+      "permission": "full_admin",
+      "permission_id": "170"
+    },
+    {
+      "permission": "view_admin",
+      "permission_id": "171"
+    },
+    {
+      "permission": "edit_admin",
+      "permission_id": "172"
+    },
+    {
+      "permission": "delete_admin",
+      "permission_id": "173"
+    },
+    {
+      "permission": "add_admin",
+      "permission_id": "174"
+    }
+  ]
+}

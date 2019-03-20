@@ -1,0 +1,82 @@
+.login-page-wrapper {
+  background-image: url('../../assets/images/login-bg-1.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.login-logo {
+  margin-top: 30px;
+}
+
+.login-form-wrapper {
+  text-align: center;
+}
+
+.login-form-wrapper form {
+  padding: 30px 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  display: inline-block;
+  opacity: 0.8;
+  margin-top: 20px;
+}
+
+.login-form-wrapper .input-icons {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.login-form-wrapper .form-control {
+  display: inline-block;
+  width: 250px;
+  border: 0;
+  border-bottom: 1px solid #ccc;
+  box-shadow: none;
+  border-radius: 0;
+  padding-left: 0;
+}
+
+.login-form-wrapper .forgot-password {
+  float: right;
+  text-decoration: none;
+  font-size: smaller;
+  opacity: 0.9;
+}
+
+.login-form-wrapper .login-btn {
+  color: #fff;
+  background-color: #0085f0;
+  display: block;
+  text-align: center;
+  border-radius: 10px;
+  padding: 4px;
+  margin-top: 10px;
+  outline: none !important;
+}
+
+.login-form-wrapper .login-btn:hover,
+.login-form-wrapper .login-btn:focus {
+  opacity: 0.4;
+  outline: none !important;
+}
+
+.login-logo span {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.login-form-submit {
+  margin: none;
+  width: 100%;
+  border: 0;
+}
+
+@media (min-width: 700px) {
+}

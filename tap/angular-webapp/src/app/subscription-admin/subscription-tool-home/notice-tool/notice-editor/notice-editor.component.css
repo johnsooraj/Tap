@@ -1,0 +1,60 @@
+.notice-container {
+  width: 70%;
+  height: 95%;
+  margin: 15px auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  text-align: center;
+  border: 1px solid black;
+  border-radius: 20px;
+}
+
+.notice-title-input,
+.notice-link-input {
+  justify-content: center;
+}
+
+.notice-title-input input[type='text'],
+.notice-link-input input[type='text'] {
+  width: 80%;
+}
+
+.notice-textarea-input textarea {
+  color: #999999;
+  margin: 2px auto;
+  width: 80%;
+  padding: 10px;
+  border-radius: 20px;
+  resize: none;
+  overflow: auto;
+  outline: none;
+  box-shadow: none;
+}
+
+.notice-documents-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.checkbox-wrap:hover {
+  color: #0052cc;
+  font-weight: 500;
+}
+
+.fill-control-indicator-icon {
+  position: absolute;
+  left: 0;
+  transition: 0.3s;
+  background: transperent;
+  background-size: 0%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.notice-expiredate{
+  width: 50%;
+  margin-left: 9%;
+}

@@ -1,0 +1,20 @@
+.super-admin-content{
+    display: block;
+    width: 100%;
+    padding-top: 20px;
+}
+.super-admin-content{
+    width: 100%;
+    height: 100vh;
+    background-color: #fff;
+}
+
+.loggedInUserName{
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 20px;
+}
+
+.loggedInUserName > p{
+    margin-left: 5px;
+}

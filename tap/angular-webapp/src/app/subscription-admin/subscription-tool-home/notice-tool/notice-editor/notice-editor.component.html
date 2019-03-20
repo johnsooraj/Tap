@@ -1,0 +1,131 @@
+<div class="notice-container">
+  <div class="notice-title">
+    <div class="row notice-title-input">
+      <input
+        [(ngModel)]="currentNoticeModel.noticeText"
+        class="form-control"
+        type="text"
+        name=""
+        id=""
+        placeholder="Add your notice title"
+        #noticeTitleNgbPopover="ngbPopover"
+        placement="left"
+        ngbPopover="Notice Title for Users!"
+        popoverTitle="Notice Title"
+      />
+    </div>
+  </div>
+  <div class="notice-documents">
+    <div class="row notice-documents-wrapper">
+      <div>
+        <div
+          class="checkbox-wrap"
+          #imageNgbPopover="ngbPopover"
+          [autoClose]="false"
+          triggers="manual"
+          placement="left"
+          ngbPopover="Image file can only choose!"
+          popoverTitle="Incorrect Format"
+        >
+          <label class="custom-control fill-checkbox">
+            <input type="file" #noticeImageFile (change)="noticeFileChange($event, 'image')" class="fill-control-input" />
+            <span class="fill-control-indicator-icon"> <i class="fa fa-picture-o" aria-hidden="true"></i> </span>
+            <span class="fill-control-description">Add Image</span>
+          </label>
+        </div>
+      </div>
+      <div>
+        <div
+          class="checkbox-wrap"
+          [ngbPopover]="popContent"
+          [popoverTitle]="popTitle"
+          [autoClose]="false"
+          triggers="manual"
+          #p="ngbPopover"
+          (click)="p.open()"
+        >
+          <ng-template #popContent>
+            <form class="form-inline">
+              <div class="form-group">
+                <div class="input-group">
+                  <input
+                    class="form-control"
+                    [(ngModel)]="currentNoticeModel.referencelink"
+                    placeholder="link here.."
+                    name="dp"
+                    placement="top"
+                  />
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-primary calendar fa fa-check" (click)="p.close()" type="button"></button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </ng-template>
+          <ng-template #popTitle>
+            <p>You can add your <b>link</b> here!!</p>
+          </ng-template>
+          <label class="custom-control fill-checkbox">
+            <input type="text" class="fill-control-input" />
+            <span class="fill-control-indicator-icon"> <i class="fa fa-link" aria-hidden="true"></i> </span>
+            <span class="fill-control-description">Add Link</span>
+          </label>
+        </div>
+      </div>
+      <div>
+        <div
+          class="checkbox-wrap"
+          #pdfNgbPopover="ngbPopover"
+          placement="right"
+          [autoClose]="false"
+          triggers="manual"
+          ngbPopover="Pdf file can only choose!"
+          popoverTitle="Incorrect Format"
+        >
+          <label class="custom-control fill-checkbox">
+            <input type="file" #noticePdfFile (change)="noticeFileChange($event, 'pdf')" class="fill-control-input" />
+            <span class="fill-control-indicator-icon"> <i class="fa fa-file-pdf-o" aria-hidden="true"></i> </span>
+            <span class="fill-control-description">Upload Documents (pdf only)</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="notice-textarea">
+    <div class="row notice-textarea-input">
+      <textarea
+        [(ngModel)]="currentNoticeModel.description"
+        name=""
+        id=""
+        cols="30"
+        rows="10"
+        data-gramm_editor="false"
+        placeholder="Add your desired text here..."
+        #noticeDescriptionNgbPopover="ngbPopover"
+        placement="left"
+        ngbPopover="Notice Details for Users!"
+        popoverTitle="Notice Content"
+      ></textarea>
+    </div>
+  </div>
+  <div class="notice-expiredate">
+    <div class="input-group">
+      <input 
+      class="form-control" 
+      placeholder="expiry date" 
+      name="dp" 
+      placement="bottom"
+      ngbDatepicker 
+      [(ngModel)]="ngDatePicModal"
+      #d="ngbDatepicker" />
+      <div class="input-group-append">
+        <button class="btn btn-outline-primary calendar fa fa-calendar" (click)="d.toggle()" type="button"></button>
+      </div>
+    </div>
+  </div>
+  <div class="notice-buttons">
+      
+    <input type="button" (click)="noticeButtonClickEvent('cancel')" class="customer-category-btn" value="Cancel" />
+    <input type="button" (click)="noticeButtonClickEvent('save')" class="customer-category-btn" value="Proceed" />
+  </div>
+</div>

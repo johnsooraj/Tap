@@ -1,0 +1,513 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Poll Result</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        var PollOptionType =
+            {
+                MultipleOptions: 1,
+                ThisOrThat: 2,
+                Rating: 3,
+                Images: 4,
+                RSVP: 5
+            }
+        var chartColors = ['#3366CC', '#DC3912', '#FF9900', '#109618', '#990099', '#3B3EAC',
+            '#0099C6', '#DD4477', '#66AA00', '#B82E2E', '#316395', '#994499', '#22AA99',
+            '#AAAA11', '#6633CC', '#E67300', '#8B0707', '#329262', '#5574A6', '#3B3EAC'];
+        var alphabets = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
+        var dataPoints = [];
+        google.charts.load("current", { packages: ["corechart"] });
+        google.charts.setOnLoadCallback(drawChart);
+        var starCode = "\u2b50";
+        function drawChart() {
+            $(document).ready(function () {
+                $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                    var target = $(e.target).attr("href") // activated tab
+
+                });
+                var id = $('#pollId').val();
+                var token = $('#token').val();
+                var groupId = $('#groupId').val();
+                $.ajax({
+                    type: 'GET',
+                    url: '/tap/api/poll/'+ id+'/'+groupId,
+                    beforeSend: function (xhr) { xhr.setRequestHeader('token', token); },
+                    success: function (data) {
+                var poll = data;
+                //var poll = {"pollId":1,"createdUser":0,"createdDate":1492260419000,"displayCreator":0,"expiresOn":1491264000000,"groupId":1,"lastAnsweredDate":1514986114000,"participantCount":0,"pollOptionType":4,"pollOrder":null,"pollSeriesId":0,"pollStatus":0,"pollType":1,"question":"Do you attend the Meeting?","resultDisplayTo":null,"resultDisplayType":1,"imageoptions":[{"imageOptionsId":15,"caption":"hiii3","image_url":"https://i.pinimg.com/236x/59/a4/30/59a430a5977953872b74c9efb5aa3dcd--fellowship-of-the-ring-elijah-wood.jpg","responsCount":0,"imageByte":null,"imageoptionsresponses":[{"imageOptionResponseId":9,"read":0,"userId":30,"optionId":null,"groupId":1,"userName":"Rakesh A","profileUrl":"https://i.pinimg.com/originals/9c/33/06/9c330690c0ceae758da376e3ff344ef6.jpg"},{"imageOptionResponseId":10,"read":0,"userId":30,"optionId":null,"groupId":1,"userName":"Rakesh A","profileUrl":"https://i.pinimg.com/originals/9c/33/06/9c330690c0ceae758da376e3ff344ef6.jpg"},{"imageOptionResponseId":11,"read":0,"userId":36,"optionId":null,"groupId":1,"userName":"Rakesh R","profileUrl":"https://i.pinimg.com/originals/9c/33/06/9c330690c0ceae758da376e3ff344ef6.jpg"},{"imageOptionResponseId":12,"read":0,"userId":36,"optionId":null,"groupId":1,"userName":"Rakesh R","profileUrl":"https://i.pinimg.com/originals/9c/33/06/9c330690c0ceae758da376e3ff344ef6.jpg"}]},{"imageOptionsId":16,"caption":"caption 2","image_url":"https://i.pinimg.com/236x/59/a4/30/59a430a5977953872b74c9efb5aa3dcd--fellowship-of-the-ring-elijah-wood.jpg","responsCount":0,"imageByte":null,"imageoptionsresponses":[{"imageOptionResponseId":18,"read":0,"userId":94,"optionId":null,"groupId":1,"userName":"Sajeesh C","profileUrl":"http://18.218.25.43:8080/user/profile/4672930a-094e-4b6d-a863-a491e21b5786.png"}]}],"multipleoptions":[],"pollcomments":[{"pollCommentId":1,"commentText":"Very Nice","groupId":0,"createdDate":null,"userId":0,"userName":null,"profilePicUrl":null},{"pollCommentId":2,"commentText":"viiilllllllll....","groupId":0,"createdDate":null,"userId":0,"userName":null,"profilePicUrl":null},{"pollCommentId":3,"commentText":"viiilllllllll....","groupId":0,"createdDate":null,"userId":0,"userName":null,"profilePicUrl":null}],"ratingoptions":[],"thisorthatoptions":[],"polllikes":[],"pollInterests":[],"pollGroupModels":[{"groupPollId":29,"groupId":1,"createdDate":null,"sharedBy":null}],"username":null,"profilePic":null,"pollLikeCount":0,"pollCommentCount":0,"pollShareCount":0};
+                //var poll = { "pollId": 223, "createdUser": 0, "createdDate": 1522838816000, "displayCreator": 1, "expiresOn": 1523443560000, "groupId": 0, "lastAnsweredDate": 1522904984000, "participantCount": 0, "pollOptionType": 1, "pollOrder": null, "pollSeriesId": 0, "pollStatus": 0, "pollType": 1, "question": "Is Rohit a nice guy?", "resultDisplayTo": null, "resultDisplayType": 1, "imageoptions": [], "multipleoptions": [{ "mPollOptionsId": 423, "optionText": "Yes", "responseCount": 0, "multipleoptionsresponses": [{ "multipleOptionResponseId": 108, "read": 0, "userId": 139, "optionId": 0, "groupId": 0, "userName": "pratik Venglet", "profileUrl": null }, { "multipleOptionResponseId": 109, "read": 0, "userId": 135, "optionId": 0, "groupId": 0, "userName": "John abraham", "profileUrl": null }, { "multipleOptionResponseId": 119, "read": 0, "userId": 95, "optionId": 0, "groupId": 0, "userName": "Benin Clint", "profileUrl": "https://s3.ap-south-1.amazonaws.com/letztapcyspan/profile/bigIcon/d1bdb9a0-0627-4342-920a-7bd4ac941fd3292068452020265446.png" }] }, { "mPollOptionsId": 424, "optionText": "No", "responseCount": 0, "multipleoptionsresponses": [{ "multipleOptionResponseId": 113, "read": 0, "userId": 138, "optionId": 0, "groupId": 0, "userName": "Abraham Abraham", "profileUrl": null }] }, { "mPollOptionsId": 425, "optionText": "Definitely No", "responseCount": 0, "multipleoptionsresponses": [{ "multipleOptionResponseId": 117, "read": 0, "userId": 125, "optionId": 0, "groupId": 0, "userName": "anu jacob", "profileUrl": "http://18.218.25.43:8080/user/profile/563554a4-7a38-4abe-9e2d-dd5ec58bab33.png" }] }], "pollcomments": [{ "pollCommentId": 166, "commentText": "Yes", "groupId": 0, "createdDate": 1522839179000, "userId": 0, "userName": null, "profilePicUrl": null }, { "pollCommentId": 168, "commentText": "heâ€™s an amazing guy.", "groupId": 0, "parentId": 0, "createdDate": 1522839740000, "userId": 0, "userName": null, "profilePicUrl": null }, { "pollCommentId": 169, "commentText": "Yes", "groupId": 0, "createdDate": 1522840219000, "userId": 0, "userName": null, "profilePicUrl": null }, { "pollCommentId": 170, "commentText": "Hi..", "groupId": 0, "parentId": 0, "createdDate": 1522840527000, "userId": 0, "userName": null, "profilePicUrl": null }, { "pollCommentId": 172, "commentText": "Hi", "groupId": 0, "createdDate": 1522849927000, "userId": 0, "userName": null, "profilePicUrl": null }, { "pollCommentId": 175, "commentText": "??", "groupId": 0, "parentId": 0, "createdDate": 1522860701000, "userId": 0, "userName": null, "profilePicUrl": null }], "ratingoptions": [], "thisorthatoptions": [], "polllikes": [{ "pollLikeId": 137, "status": "ok", "groupId": 0, "userId": 0, "userName": null }], "pollInterests": [], "pollGroupModels": [{ "groupPollId": 202, "groupId": 0, "createdDate": 1522838816000, "sharedBy": { "userId": 138, "firstName": "Abraham", "lastName": "Abraham", "phone": "9740194001", "email": "abraham.j.abraham@gmail.com", "age": null, "gender": null, "status": "1", "createdDate": 1522337494000, "attributeName": null, "lastModifiedDate": 1522337494000, "profilePic": null, "coverPic": null, "accountType": null, "profilePic20": null, "dateOfBirth": -62135769600000, "userAddress": { "addressId": 27, "address": null, "country_id": null, "zip": 0, "city_id": null, "state_id": null }, "userInterest": [], "password": null, "profilePhoto": null, "coverPhoto": null, "createdPollCount": null, "publicPollResponseCount": null, "privatePollResponseCount": null } }, { "groupPollId": 216, "groupId": 137, "createdDate": 1522848683000, "sharedBy": null }, { "groupPollId": 215, "groupId": 138, "createdDate": 1522848671000, "sharedBy": null }], "username": null, "profilePic": null, "pollLikeCount": 0, "pollCommentCount": 0, "pollShareCount": 0 };
+                //var poll = { "pollId": 190, "createdUser": 0, "createdDate": 1521803589000, "displayCreator": 1, "expiresOn": 1522408260000, "groupId": 0, "lastAnsweredDate": 1522309990000, "participantCount": 0, "pollOptionType": 3, "pollOrder": null, "pollSeriesId": 0, "pollStatus": 0, "pollType": 0, "question": "How do u rate the Black Panther movie?", "resultDisplayTo": null, "resultDisplayType": 1, "imageoptions": [], "multipleoptions": [], "pollcomments": [], "ratingoptions": [{ "ratingOptionId": 75, "rating": 1, "responseCount": 0, "ratingoptionsresponses": [] }, { "ratingOptionId": 76, "rating": 2, "responseCount": 0, "ratingoptionsresponses": [{ "ratingOptionResponseId": 47, "read": 0, "userId": 133, "optionId": 0, "groupId": 128, "userName": "Sajeesh C", "profileUrl": "http://18.218.25.43:8080/user/profile/061e51ec-54a0-4fe0-9353-5bbf97baeb15.png" }] }, { "ratingOptionId": 77, "rating": 3, "responseCount": 0, "ratingoptionsresponses": [{ "ratingOptionResponseId": 23, "read": 0, "userId": 95, "optionId": 0, "groupId": 128, "userName": "Benin Clint", "profileUrl": "https://s3.ap-south-1.amazonaws.com/letztapcyspan/profile/bigIcon/d1bdb9a0-0627-4342-920a-7bd4ac941fd3292068452020265446.png" }] }, { "ratingOptionId": 78, "rating": 4, "responseCount": 0, "ratingoptionsresponses": [{ "ratingOptionResponseId": 37, "read": 0, "userId": 126, "optionId": 0, "groupId": 128, "userName": "Jen Varghese", "profileUrl": "http://18.218.25.43:8080/user/profile/cd5d2107-119c-4b5e-acff-f962f1acc599.png" }, { "ratingOptionResponseId": 38, "read": 0, "userId": 124, "optionId": 0, "groupId": 128, "userName": "Sijin C", "profileUrl": "http://18.218.25.43:8080/user/profile/ea058e61-f206-4f47-b699-ec02716558fb.png" }, { "ratingOptionResponseId": 40, "read": 0, "userId": 111, "optionId": 0, "groupId": 128, "userName": "Sijin C", "profileUrl": "http://18.218.25.43:8080/user/profile/edd94203-d68a-4517-9a66-a258f7b9c14e.png" }] }, { "ratingOptionId": 79, "rating": 5, "responseCount": 0, "ratingoptionsresponses": [{ "ratingOptionResponseId": 41, "read": 0, "userId": 125, "optionId": 0, "groupId": 128, "userName": "anu jacob", "profileUrl": "http://18.218.25.43:8080/user/profile/563554a4-7a38-4abe-9e2d-dd5ec58bab33.png" }] }], "thisorthatoptions": [], "polllikes": [{ "pollLikeId": 69, "status": "ok", "groupId": 128, "userId": 0, "userName": null }], "pollInterests": [], "pollGroupModels": [{ "groupPollId": 124, "groupId": 128, "createdDate": null, "sharedBy": null }], "username": null, "profilePic": null, "pollLikeCount": 0, "pollCommentCount": 0, "pollShareCount": 0 };
+                //var poll = { "pollId": 218, "createdUser": 0, "createdDate": 1522331613000, "displayCreator": 1, "expiresOn": 1522936140000, "groupId": 0, "lastAnsweredDate": 1522768054000, "participantCount": 0, "pollOptionType": 1, "pollOrder": null, "pollSeriesId": 0, "pollStatus": 0, "pollType": 0, "question": "Select your favourite sport from the list below", "resultDisplayTo": "0", "resultDisplayType": 1, "imageoptions": [], "multipleoptions": [{ "mPollOptionsId": 409, "optionText": "Cricket ", "responseCount": 0, "multipleoptionsresponses": [{ "multipleOptionResponseId": 103, "read": 0, "userId": 134, "optionId": 0, "groupId": 129, "userName": "Akshay Vaidian", "profileUrl": null }] }, { "mPollOptionsId": 410, "optionText": "Football", "responseCount": 0, "multipleoptionsresponses": [] }, { "mPollOptionsId": 411, "optionText": "Tennis", "responseCount": 0, "multipleoptionsresponses": [{ "multipleOptionResponseId": 99, "read": 0, "userId": 135, "optionId": 0, "groupId": 129, "userName": "John abraham", "profileUrl": null }] }, { "mPollOptionsId": 412, "optionText": "Golf", "responseCount": 0, "multipleoptionsresponses": [] }, { "mPollOptionsId": 413, "optionText": "F1", "responseCount": 0, "multipleoptionsresponses": [] }], "pollcomments": [{ "pollCommentId": 156, "commentText": "where's are the comments?", "groupId": 0, "parentId": 0, "createdDate": 1522762594000, "userId": 0, "userName": null, "profilePicUrl": null }], "ratingoptions": [], "thisorthatoptions": [], "polllikes": [{ "pollLikeId": 119, "status": "ok", "groupId": 129, "userId": 0, "userName": null }], "pollInterests": [], "pollGroupModels": [{ "groupPollId": 189, "groupId": 129, "createdDate": 1522331613000, "sharedBy": { "userId": 125, "firstName": "anu", "lastName": "jacob", "phone": "7558832555", "email": "anu.jacobneroth@gmail.com", "age": null, "gender": "Female", "status": "1", "createdDate": 1521631273000, "attributeName": null, "lastModifiedDate": 1522763960000, "profilePic": "http://18.218.25.43:8080/user/profile/563554a4-7a38-4abe-9e2d-dd5ec58bab33.png", "coverPic": null, "accountType": null, "profilePic20": "http://18.218.25.43:8080/user/profile/twenty/cef1bba4-9d57-4b0a-9066-b006b92dcd2c.png", "dateOfBirth": -19800000, "userAddress": { "addressId": 17, "address": "", "country_id": null, "zip": 0, "city_id": null, "state_id": null }, "userInterest": [], "password": null, "profilePhoto": null, "coverPhoto": null, "createdPollCount": null, "publicPollResponseCount": null, "privatePollResponseCount": null } }], "username": null, "profilePic": null, "pollLikeCount": 0, "pollCommentCount": 0, "pollShareCount": 0 };
+                //rsvp:
+                //var poll = { "pollId": 256, "createdUser": 0, "createdDate": 1524208225000, "displayCreator": 0, "expiresOn": 1524594600000, "groupId": 0, "lastAnsweredDate": 1524208225000, "participantCount": 0, "pollOptionType": 5, "pollSeriesId": 0, "pollStatus": 0, "pollType": 0, "resultDisplayType": 1, "imageoptions": [], "multipleoptions": [], "pollcomments": [], "ratingoptions": [], "thisorthatoptions": [], "polllikes": [], "pollInterests": [], "pollGroupModels": [{ "groupPollId": 262, "groupId": 58, "createdDate": 1524208225000, "sharedBy": { "userId": 95, "firstName": "Benin", "lastName": "Clint", "phone": "9895634257", "email": "bclint@integretz.com", "age": null, "gender": "Male", "status": "1", "createdDate": 1512351669000, "attributeName": null, "lastModifiedDate": 1522973947000, "profilePic": "https://s3.ap-south-1.amazonaws.com/letztapcyspan/profile/bigIcon/d1bdb9a0-0627-4342-920a-7bd4ac941fd3292068452020265446.png", "coverPic": "", "accountType": null, "profilePic20": "https://s3.ap-south-1.amazonaws.com/letztapcyspan/profile/smallIcon/10b03d20-81df-4ec5-9d6b-2ec184936d1b1970824274949341264.png", "dateOfBirth": 1205499600000, "userAddress": { "addressId": 5, "address": "", "country_id": null, "zip": 680611, "city_id": 1, "state_id": 1 }, "userInterest": [{ "userInterestId": 178, "interestId": 1, "userId": null }, { "userInterestId": 179, "interestId": 2, "userId": null }, { "userInterestId": 180, "interestId": 3, "userId": null }, { "userInterestId": 181, "interestId": 4, "userId": null }, { "userInterestId": 182, "interestId": 5, "userId": null }, { "userInterestId": 183, "interestId": 6, "userId": null }, { "userInterestId": 184, "interestId": 7, "userId": null }, { "userInterestId": 185, "interestId": 8, "userId": null }, { "userInterestId": 186, "interestId": 9, "userId": null }], "password": null, "profilePhoto": null, "coverPhoto": null, "createdPollCount": null, "publicPollResponseCount": null, "privatePollResponseCount": null } }], "eventName": "Test", "location": "Cochin ", "description": "Sadasdasdasda", "rsvpImageUrl": "https://s3.ap-south-1.amazonaws.com/letztapcyspan/rsvpImages/bigIcon/e3ab9bdc-9c6f-411f-90e4-55aae57d7be54094239605088517738.png", "eventWhen": 1524681000000, "startsOn": 1524162600000, "rsvpPollResponseList": [{ "rsvpResponseId": 4, "rsvpResponse": 0, "userId": 95, "groupId": 58, "createdDate": 1524223357000 }], "pollLikeCount": 0, "pollCommentCount": 0, "pollShareCount": 0 }
+
+                $('#pollQuestion').html(poll.question);
+                var dataArray = ["Option", "Number of Votes", { role: 'style' }];
+                var allVotes = []; var optionArray = [];
+                        dataPoints.push(dataArray);
+                        $('.nav-tabs').append('<li class="active"><a data-toggle="tab" href="#All">All</a></li>');
+                        $('.tab-content').append('<div id="All" class="tab-pane fade in active"></div>');
+
+                        if (poll.pollOptionType == PollOptionType.Rating) {
+                            var label = "";
+                            $(poll.ratingoptions).each(function (index, option) {
+                                label = "";
+                                dataArray = [];
+                                for (i = 0; i < index + 1; i++) {
+                                    label += starCode;
+                                }
+                                dataArray.push(label);
+                                dataArray.push(option.ratingoptionsresponses.length);
+                                dataArray.push(chartColors[index]);
+                                dataPoints.push(dataArray);
+                                $('.nav-tabs').append('<li><a data-toggle="tab" href="#' + (index + 1).toString() + '">' + (index + 1).toString() + '</a></li>');
+                                $('.tab-content').append('<div id="' + (index + 1).toString() + '" class="tab-pane fade in"></div>');
+                                var optionHeader = '';
+                                var votesCountHtml = '<i class="voteCount"> (' + option.ratingoptionsresponses.length + ' votes)</i>';
+                                optionHeader += '<h4>Votes for Option ' + label + votesCountHtml + '</h4>';
+                                $('.tab-pane#' + (index + 1).toString()).append(optionHeader);
+                                $(option.ratingoptionsresponses).each(function () {
+                                    this.color = chartColors[index];
+                                });
+                                var votesHtml = GetUserVotesHtml(option.ratingoptionsresponses, (index + 1).toString(), chartColors[index]);
+                                $('.tab-pane#' + (index + 1).toString()).append(votesHtml);
+                                allVotes = allVotes.concat(option.ratingoptionsresponses);
+                               // $('#pollOptions').append("<li>"+label+"</li>")
+                            });
+                            $('.tab-pane#All').append(GetUserVotesHtml(SortByUserName(allVotes), "All"));
+                        }
+                        else if (poll.pollOptionType == PollOptionType.MultipleOptions) {
+                            $(poll.multipleoptions).each(function (index, option) {
+                                dataArray = [];
+                                dataArray.push(alphabets[index]);
+                                dataArray.push(option.multipleoptionsresponses.length);
+                                dataArray.push(chartColors[index]);
+                                dataPoints.push(dataArray);
+                                $('.nav-tabs').append('<li><a data-toggle="tab" href="#' + alphabets[index] + '">' + alphabets[index] + '</a></li>')
+                                $('.tab-content').append('<div id="' + alphabets[index] + '" class="tab-pane fade in"></div>');
+                                var optionHeader = '';
+                                var votesCountHtml = '<i class="voteCount"> (' + option.multipleoptionsresponses.length + ' votes)</i>';
+                                optionHeader += '<h4>Votes for Option ' + alphabets[index] + votesCountHtml + '</h4>';
+                                optionHeader += '<p>' + option.optionText + '</p>';
+                                $('.tab-pane#' + alphabets[index]).append(optionHeader);
+                                $(option.multipleoptionsresponses).each(function () {
+                                    this.color = chartColors[index];
+                                });
+                                var votesHtml = GetUserVotesHtml(option.multipleoptionsresponses, alphabets[index], chartColors[index]);
+                                $('.tab-pane#' + alphabets[index]).append(votesHtml);
+                                allVotes = allVotes.concat(option.multipleoptionsresponses);
+                                $('#pollOptions').append("<li>"+option.optionText+ votesCountHtml + "</li>")
+                            });
+                            $('.tab-pane#All').append(GetUserVotesHtml(SortByUserName(allVotes), "All"));
+
+                        }
+                        else if (poll.pollOptionType == PollOptionType.ThisOrThat) {
+                            $(poll.thisorthatoptions).each(function (index, option) {
+                                dataArray = [];
+                                dataArray.push(alphabets[index]);
+                                dataArray.push(option.thisorthatoptionsresponses.length);
+                                dataArray.push(chartColors[index]);
+                                dataPoints.push(dataArray);
+                                $('.nav-tabs').append('<li><a data-toggle="tab" href="#' + alphabets[index] + '">' + alphabets[index] + '</a></li>');
+                                $('.tab-content').append('<div id="' + alphabets[index] + '" class="tab-pane fade in"></div>');
+                                var optionHeader = '';
+                                var votesCountHtml = '<i class="voteCount"> (' + option.thisorthatoptionsresponses.length + ' votes)</i>';
+                                optionHeader += '<h4>Votes for Option ' + alphabets[index] + votesCountHtml + '</h4>';
+                                optionHeader += '<p>' + option.optionText + '</p>';
+                                $('.tab-pane#' + alphabets[index]).append(optionHeader);
+                                var votesHtml = GetUserVotesHtml(option.thisorthatoptionsresponses, alphabets[index], chartColors[index]);
+                                $(option.thisorthatoptionsresponses).each(function () {
+                                    this.color = chartColors[index];
+                                });
+                                $('.tab-pane#' + alphabets[index]).append(votesHtml);
+                                allVotes = allVotes.concat(option.thisorthatoptionsresponses);
+                                $('#pollOptions').append("<li>"+option.optionText+"</li>")
+                            });
+                            $('.tab-pane#All').append(GetUserVotesHtml(SortByUserName(allVotes), "All"));
+                        }
+                        else if (poll.pollOptionType == PollOptionType.Images) {
+                            $(poll.imageoptions).each(function (index, option) {
+                                dataArray = [];
+                                dataArray.push(alphabets[index]);
+                                dataArray.push(option.imageoptionsresponses.length);
+
+                                dataArray.push(chartColors[index]);
+                                dataPoints.push(dataArray);
+                                $('.nav-tabs').append('<li><a data-toggle="tab" href="#' + alphabets[index] + '">' + alphabets[index] + '</a></li>')
+                                $('.tab-content').append('<div id="' + alphabets[index] + '" class="tab-pane fade in"></div>');
+                                var optionHeader = '';
+                                var votesCountHtml = '<i class="voteCount"> (' + option.imageoptionsresponses.length + ' votes)</i>';
+                                optionHeader += '<h4>Votes for Option ' + alphabets[index] + votesCountHtml + '</h4>';
+                                optionHeader += '<img src="' + option.image_url + '" width="50" />';
+                                optionHeader += '<p>' + option.caption + '</p>';
+                                $('.tab-pane#' + alphabets[index]).append(optionHeader);
+                                $(option.imageoptionsresponses).each(function () {
+                                    this.color = chartColors[index];
+                                });
+                                var votesHtml = GetUserVotesHtml(option.imageoptionsresponses, alphabets[index]);
+                                $('.tab-pane#' + alphabets[index]).append(votesHtml);
+
+                                allVotes = allVotes.concat(option.imageoptionsresponses);
+
+                                var imageOptionHtml = GetImageOptionHtmlHtml(option, alphabets[index]);
+                                $('#pollImageOptions').append(imageOptionHtml);
+                            });
+                            $('.tab-pane#All').append(GetUserVotesHtml(SortByUserName(allVotes), "All"));
+                        }
+                        else if (poll.pollOptionType == PollOptionType.RSVP) {
+                            $('#pollQuestion').html(poll.eventName);
+                            $('#rsvpDiv').show();
+                            $('#rsvpImage').attr("src", poll.rsvpImageUrl);
+                            var date = new Date(poll.eventWhen).toString().substr(0, 15)
+                            $('#rsvpWhen').html("<b>" + date + "</b>");
+                            $('#rsvpLocation').html("<b>" + poll.location + "</b>");
+                           // $('#pollOptions').hide();
+                            poll.rsvoOptions = [{ optionText: "Yes" }, { optionText: "No" }, { optionText: "May Be" }]
+                            $(poll.rsvoOptions).each(function (index, option) {
+                                dataArray = [];
+                                dataArray.push(option.optionText);
+                                var optionResponses = [];
+                                $(poll.rsvpPollResponseList).each(function () {
+                                    if (this.rsvpResponse == index) {
+                                        this.color = chartColors[index];
+                                        optionResponses.push(this)
+                                    }
+                                });
+                                dataArray.push(optionResponses.length);
+                                dataArray.push(chartColors[index]);
+                                dataPoints.push(dataArray);
+                                $('.nav-tabs').append('<li><a data-toggle="tab" href="#' + alphabets[index] + '">' + option.optionText + '</a></li>')
+                                $('.tab-content').append('<div id="' + alphabets[index] + '" class="tab-pane fade in"></div>');
+                                var optionHeader = '';
+                                optionHeader += '<h4>Votes for Option ' + option.optionText + ' ' + optionResponses.length + ' responses</h4>';
+                                $('.tab-pane#' + alphabets[index]).append(optionHeader);
+
+                                var votesHtml = GetUserVotesHtml(optionResponses, alphabets[index], chartColors[index]);
+                                $('.tab-pane#' + alphabets[index]).append(votesHtml);
+                                allVotes = allVotes.concat(optionResponses);
+                                var votesCountHtml = '<i class="voteCount"> (' + optionResponses.length + ' votes)</i>';
+                                $('#pollOptions').append("<li>"+option.optionText+ votesCountHtml + "</li>")
+                            });
+                            $('.tab-pane#All').append(GetUserVotesHtml(SortByUserName(allVotes), "All"));
+                        }
+                        if (poll.resultDisplayType == 1 || poll.pollOptionType == PollOptionType.RSVP)
+                        {
+                            $('#divVoteDetails').show();
+                        }
+                        $('#totalResponseCount').html(allVotes.length)
+                        /* var data = google.visualization.arrayToDataTable([
+                           ['Task', 'Hours per Day'],
+                           ['Work',     11],
+                           ['Eat',      2],
+                           ['Commute',  2],
+                           ['Watch TV', 2],
+                           ['Sleep',    7]
+                         ]);*/
+                        var data = google.visualization.arrayToDataTable(dataPoints);
+
+                         var pieOptions = {
+                                 title: '',
+                                 is3D: false,
+                                 width: '100%',
+                                 height: '300',
+                                 'chartArea': {
+                                     'width': '100%', 'height': '80%', 'right': '20',
+                                     'left': '10'
+                                 },
+                                 'legend': { 'position': 'left',
+                                alignment: 'center',
+                                   }
+                               };
+                               var barOptions = {
+                                   title: '',
+                                   width: '100%',
+                                   height: '300',
+                                   legend:"top",
+                               animation: {
+                               "startup": true,
+                                duration: 1000,
+                               easing: 'out'
+                               },
+                               'chartArea': { 'width': '65%', 'height': '80%','right':'40' },
+                               };
+
+
+                        var piechart = new google.visualization.PieChart(document.getElementById('piechart'));
+                        piechart.draw(data, pieOptions);
+                        google.visualization.events.addListener(piechart, 'select', piechartSelectHandler);
+
+                        var barchart = new google.visualization.BarChart(document.getElementById('barchart'));
+                        barchart.draw(data, barOptions);
+                        google.visualization.events.addListener(barchart, 'select', barchartSelectHandler);
+
+                        function piechartSelectHandler() {
+                            var selectedItem = piechart.getSelection()[0];
+
+                            if (selectedItem) {
+                                var selected = data.getValue(selectedItem.row, 0);
+                                $('.nav-tabs a[href="#' + selected + '"]').tab('show');
+                            }
+                        }
+                        function barchartSelectHandler() {
+                            var selectedItem = barchart.getSelection()[0];
+
+                            if (selectedItem) {
+                                var selected = data.getValue(selectedItem.row, 0);
+                                $('.nav-tabs a[href="#' + selected + '"]').tab('show');
+                            }
+                        }
+
+                    }
+                });
+
+            });
+
+        }
+        function GetImageOptionHtmlHtml(option,alphabet)
+        {
+            var imageOptionHtml = '';
+            imageOptionHtml +=  '<div class="imageOption" style="position: relative; z-index: 1;color:white;">';
+            imageOptionHtml += '<img style="position: absolute; z-index: 2;" src="' + option.image_url + '"  />';
+            imageOptionHtml +=  '<div class="overlayDiv" >';
+            imageOptionHtml += '<div class="label">' + alphabet; +'</div>';
+            imageOptionHtml += '<div class="check">';
+            isUserVoted = false;
+            if (isUserVoted) {
+                imageOptionHtml += '<img src="check.png" />';
+            }
+            imageOptionHtml += '</div>';
+            imageOptionHtml += '<div class="' + option.caption; +'">Caption goes here.</div>';
+            imageOptionHtml +=  '</div>';
+            imageOptionHtml += '</div>';
+            return imageOptionHtml;
+        }
+
+        function GetUserVotesHtml(votes,id)
+        {
+            var voteHtml = '<table class="tblUserVotes" style="width:100%;" cellspacing="0" cellpadding="0">';
+            if (votes.length == 0)
+            {
+                return "<span>No votes for this option<span>"
+            }
+            $(votes).each(function (index, vote) {
+                voteHtml += '<tr>';
+                voteHtml += '<td style="width:50px;">';
+                voteHtml += '<img style="" src="' + vote.profileUrl + '" />'
+                voteHtml += '</td>';
+                voteHtml += '<td class="bottomBorderTd" style="text-align:left;">';
+                voteHtml += '<div style="padding:10px;">'
+                voteHtml += vote.userName
+                voteHtml += '</div>'
+                voteHtml += '</td>';
+                voteHtml += '<td  valign="top" style="width:60px;text-align:left;">';
+                if (vote.option == undefined)
+                    vote.option = id;
+                voteHtml += '<div style="background-color:' + vote.color + '" class="votedOption">' + vote.option + '</div>'
+                voteHtml += '</td>';
+                voteHtml += "</tr>";
+            });
+            voteHtml += "</table>";
+
+            return voteHtml;
+        }
+        function SortByUserName(votes) {
+            return votes.sort(function (a, b) {
+                var textA = a.userName.toUpperCase();
+                var textB = b.userName.toUpperCase();
+                return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+            });
+        }
+    </script>
+    <style>
+        .bottomBorderTd {
+            border-bottom: 1px solid #ccc;
+        }
+
+        .votedOption {
+            width: 60px;
+            height: 59px;
+            /*background-color: brown;*/
+            font-size: 30px;
+            color: #fff;
+            padding: 10px 18px;
+        }
+
+        #divVoteDetails {
+            display: none;
+        }
+
+        .imageOption {
+            float: left;
+            width: 48%;
+            margin: 1% 1%;
+            opacity: 0.9;
+            height: 200px;
+            overflow: hidden;
+        }
+
+            .imageOption img {
+                width: 100%;
+                height: auto;
+            }
+
+        .overlayDiv {
+            position: relative;
+            z-index: 3;
+            background-color: black;
+            height: 200px;
+            width: 100%;
+            opacity: 0.5;
+            text-align: center;
+            padding-top: 10px;
+        }
+
+            .overlayDiv .label {
+                font-size: 35px;
+            }
+
+            .overlayDiv .caption {
+                font-size: 13px;
+                margin-top: 20px;
+            }
+
+        #pollOptions li {
+            font-size: 1.5em;
+        }
+
+        .check {
+            height: 100px;
+            width: 100%;
+        }
+
+            .check img {
+                width: 70px;
+                margin-top: 20px;
+            }
+
+        #pollQuestion {
+            margin-left: 10px;
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        .tblUserVotes td img {
+            border-radius: 50%;
+            margin: 5px;
+            width: 50px;
+            height: 50px;
+        }
+
+        .tab-pane {
+            min-height: 400px;
+        }
+
+        .voteCount {
+            color: #2570C3;
+            font-size: 13px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <input id="pollId" type="hidden" th:value="${pollId}">
+    <input id="groupId" type="hidden" th:value="${groupId}">
+    <input id="token" type="hidden" th:value="${token}">
+    <input type="hidden" id="documentHeight" value="3000" />
+    <h2 id="pollQuestion"></h2>
+    <div id="rsvpDiv" style="display:none;padding:5px;">
+        When: <span id="rsvpWhen"></span>
+        <br />
+        Location: <span id="rsvpLocation"></span>
+        <img id="rsvpImage" src="" style="width:100%;" />
+    </div>
+    <ol id="pollOptions" style="list-style-type:upper-alpha">
+        <!--<li>Yes</li>
+        <li>May be</li>
+        <li>No</li>-->
+    </ol>
+
+    <div id="pollImageOptions" style="float:left;width:100%;">
+        <!--<div class="imageOption" style="position: relative; z-index: 1;color:white;">
+            <img src="http://t2.gstatic.com/images?q=tbn:ANd9GcQlZ4YZ7wNla7O6kQQQ83OAcEDsv1_S1a_euSbenWr_FpkJW_6D" style="position: absolute; z-index: 2;" />
+            <div class="overlayDiv" >
+                <div class="label">A</div>
+                <div class="check"><img src="check.png" /></div>
+                <div class="caption">Caption goes here.</div>
+            </div>
+        </div>
+        <div class="imageOption" style="position: relative; z-index: 1;color:white;">
+            <img src="http://t2.gstatic.com/images?q=tbn:ANd9GcQlZ4YZ7wNla7O6kQQQ83OAcEDsv1_S1a_euSbenWr_FpkJW_6D" style="position: absolute; z-index: 2;" />
+            <div class="overlayDiv" >
+                <div class="label">B</div>
+                <div class="check"></div>
+                <div class="caption">Caption goes here.</div>
+            </div>
+        </div>
+        <div class="imageOption" style="position: relative; z-index: 1;color:white;">
+            <img src="http://t2.gstatic.com/images?q=tbn:ANd9GcQlZ4YZ7wNla7O6kQQQ83OAcEDsv1_S1a_euSbenWr_FpkJW_6D" style="position: absolute; z-index: 2;" />
+            <div class="overlayDiv" >
+                <div class="label">C</div>
+                <div class="check"></div>
+                <div class="caption">Caption goes here.</div>
+            </div>
+        </div>
+        <div class="imageOption" style="position: relative; z-index: 1;color:white;">
+            <img src="http://t2.gstatic.com/images?q=tbn:ANd9GcQlZ4YZ7wNla7O6kQQQ83OAcEDsv1_S1a_euSbenWr_FpkJW_6D" style="position: absolute; z-index: 2;" />
+            <div class="overlayDiv" >
+                <div class="label">D</div>
+                <div class="check"></div>
+                <div class="caption">Caption goes here.</div>
+            </div>
+        </div>-->
+    </div>
+    <div style="background-color:#ccc;padding:8px;margin-top:15px;">
+        <span style="padding-left:5px;">Total <span id="totalResponseCount"></span> Responses</span>
+    </div>
+
+    <div style="float:left;width:100%;">
+        <div id="chart_wrap">
+            <div id="piechart"></div>
+        </div>
+        <div id="chart_wrap">
+            <div id="barchart"></div>
+        </div>
+        <div class="container" id="divVoteDetails">
+
+            <h3>Individual Vote Details</h3>
+            <ul class="nav nav-tabs">
+                <!--<li class="active"><a data-toggle="tab" href="#home">Home</a></li>
+                <li><a data-toggle="tab" href="#menu1">Menu 1</a></li>
+                <li><a data-toggle="tab" href="#menu2">Menu 2</a></li>-->
+            </ul>
+
+            <div class="tab-content">
+                <!--<div id="home" class="tab-pane fade in active">
+                    <h4>Votes for Option A</h4>
+                    <p>Yes I agree.</p>
+                    <table class="tblUserVotes" style="width:100%;" cellspacing="0" cellpadding="0"></table>
+                </div>
+                <div id="menu1" class="tab-pane fade">
+                    <h4>Votes for Option B</h4>
+                    <p>No I disagree.</p>
+                    <table class="tblUserVotes" style="width:100%;" cellspacing="0"></table>
+                </div>
+                <div id="menu2" class="tab-pane fade">
+                    <h3>Menu 2</h3>
+                    <p>Some content in menu 2.</p>
+                </div>-->
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

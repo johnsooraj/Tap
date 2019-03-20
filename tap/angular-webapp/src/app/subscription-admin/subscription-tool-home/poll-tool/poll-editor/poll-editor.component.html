@@ -1,0 +1,114 @@
+<div class="poll-wrapper">
+  <form [formGroup]="pollFormGroup" novalidate>
+    <div class="poll-que-container">
+      <div class="poll-form-container">
+        <div class="poll-que">
+          <input #pollQuestionInput="ngbPopover" formControlName="pollQuestion" placement="left" ngbPopover="Poll Question Required!!"
+            popoverTitle="Required!" type="text" class="form-control" placeholder="Poll Question" />
+        </div>
+        <div class="poll-group-container">
+          <ngb-tabset [orientation]="ngTabOptions.orientation" [justify]="ngTabOptions.justify" (tabChange)="pollOptionChange($event)">
+            <ngb-tab title="Multiple Options" id="multiplepolloption">
+              <ng-template ngbTabContent>
+                <div class="poll-options-container" formArrayName="options">
+                  <div class="poll-que-btn commonBtn" (click)="optionIconClickEvent('add')">
+                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                    <span>Add Option ({{ pollFormGroup['controls'].options['controls'].length }})</span>
+                  </div>
+
+                  <div *ngFor="let item of pollFormGroup['controls'].options['controls']; let iquest = index">
+                    <div class="poll-multiple-options-container" formGroupName="{{ iquest }}">
+                      <div class="form-group">
+                        <div class="input-group">
+                          <input type="text" class="form-control" placeholder="{{ 'Option ' + (iquest + 1) }}"
+                            formControlName="optionText" />
+                          <div class="input-group-append" *ngIf="iquest > 1">
+                            <button type="button" class="btn btn-outline-danger fa fa-times" (click)="optionIconClickEvent('remove', iquest)"></button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </ng-template>
+            </ngb-tab>
+            <ngb-tab title="Rating Options" id="ratingpolloption">
+              <ng-template ngbTabContent>
+                <!-- <div class="poll-options-container"><span>Rating Option</span></div> -->
+              </ng-template>
+            </ngb-tab>
+            <ngb-tab title="Images" id="imagespolloption">
+              <ng-template ngbTabContent>
+                <div class="poll-option-container">
+                  <div class="poll-image-container">
+                    <div class="poll-image-holder">
+                      <input #pollImage1FileInput (change)="fileChangeEvent(pollImage1)" style="display: none;" type="file"
+                        name="image1" id="image1" />
+                      <img #pollImage1 #pollOptionImageInput="ngbPopover" placement="left" ngbPopover="Poll Options Question Required!!"
+                        popoverTitle="Required!" (click)="imageChooserClickEvent($event)" name="image1" src="assets/images/profile-pic.png"
+                        alt="img" />
+                    </div>
+                    <div class="poll-image-holder">
+                      <input #pollImage2FileInput (change)="fileChangeEvent(pollImage2)" style="display: none;" type="file"
+                        name="image2" id="image2" />
+                      <img #pollImage2 (click)="imageChooserClickEvent($event)" name="image2" src="assets/images/profile-pic.png"
+                        alt="img" />
+                    </div>
+                    <div class="poll-image-holder">
+                      <input #pollImage3FileInput (change)="fileChangeEvent(pollImage3)" style="display: none;" type="file"
+                        name="image3" id="image3" />
+                      <img #pollImage3 (click)="imageChooserClickEvent($event)" name="image3" src="assets/images/profile-pic.png"
+                        alt="img" />
+                    </div>
+                    <div class="poll-image-holder">
+                      <input #pollImage4FileInput (change)="fileChangeEvent(pollImage4)" style="display: none;" type="file"
+                        name="image4" id="image4" />
+                      <img #pollImage4 (click)="imageChooserClickEvent($event)" name="image4" src="assets/images/profile-pic.png"
+                        alt="img" />
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+            </ngb-tab>
+          </ngb-tabset>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="poll-format-container">
+    <div class="checkbox-wrap">
+      <label class="custom-control fill-checkbox">
+        <input type="checkbox" (change)="pollLiveResult = !pollLiveResult" class="fill-control-input" />
+        <span class="fill-control-indicator"></span> <span class="fill-control-description">Live Result</span>
+      </label>
+    </div>
+    <div class="checkbox-wrap">
+      <label class="custom-control fill-checkbox">
+        <input type="checkbox" (change)="pollClosePoll = !pollClosePoll" class="fill-control-input" />
+        <span class="fill-control-indicator"></span> <span class="fill-control-description">Close Poll</span>
+      </label>
+    </div>
+  </div>
+
+  <div class="poll-date-container">
+    <div class="fill-control-description"> Set Expiry Date </div>
+    <div class="input-group">
+      <input class="form-control" placeholder="yyyy-mm-dd" name="dp" placement="top" [(ngModel)]="ngDatePicModal"
+        ngbDatepicker #d="ngbDatepicker" />
+      <div class="input-group-append">
+        <button class="btn btn-outline-primary calendar fa fa-calendar" (click)="d.toggle()" type="button"></button>
+      </div>
+    </div>
+    <div>
+      <ngb-timepicker [(ngModel)]="ngTimePicModal"></ngb-timepicker>
+    </div>
+  </div>
+
+  <div class="poll-btn-container">
+    <input type="button" id="cancel" class="commonBtn" value="Cancel" (click)="pollButtonClick('cancel')" />
+    <input type="button" id="draft" class="commonBtn" value="Save" (click)="pollButtonClick('save')" />
+  </div>
+
+</div>

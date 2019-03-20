@@ -1,0 +1,16 @@
+.admin-main-container{
+  height: calc(100vh - 70px);
+  margin: 5px;
+  overflow-y: hidden;
+}
+
+.admin-top-button-panel{
+  height: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.admin-body-panel{
+  height: 90%;
+}

@@ -1,0 +1,394 @@
+<div class="add-admin-warpper">
+  <div class="add-admin-container">
+    <form [formGroup]="adminFormGroup">
+      <form-wizard>
+        <wizard-step [title]="'Step1'" [isValid]="adminName.valid && adminPhone.valid">
+          <h2>User Detail</h2>
+          <div class="form-wizard-fixedbox">
+            <div class="form-wizard-controller">
+              <div class="form-group row">
+                <label for="staticEmail" class="col-sm-4 col-form-label">Full Name</label>
+                <div class="col-sm-8">
+                  <input formControlName="adminName" type="text" class="form-control" placeholder="full name" [ngClass]="{
+                       'is-invalid': !adminName.valid && adminName.touched
+                     }">
+                  <small *ngIf="!adminName.valid && adminName.touched" id="emailHelp"
+                    class="form-text text-danger">enter a name for administrator.</small>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="staticEmail" class="col-sm-4 col-form-label">Contact Number</label>
+                <div class="col-sm-8">
+                  <input formControlName="adminPhone" type="number" class="form-control" placeholder="phone number"
+                    [ngClass]="{
+                    'is-invalid': !adminPhone.valid && adminPhone.touched
+                  }">
+                  <small *ngIf="!adminPhone.valid && adminPhone.touched" id="emailHelp"
+                    class="form-text text-danger">enter a contact number for administrator.</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </wizard-step>
+        <wizard-step [title]="'Step2'"
+          [isValid]="adminUsername.valid && adminPassword.valid || !closedService.showAddAdmin">
+          <h2>Credentials</h2>
+          <div class="form-wizard-fixedbox">
+            <div class="form-wizard-controller">
+              <div class="form-group row">
+                <label for="staticEmail" class="col-sm-4 col-form-label">Email / Username</label>
+                <div class="col-sm-8">
+                  <input formControlName="adminUsername" type="email" class="form-control"
+                    placeholder="name@example.com" [ngClass]="{
+                      'is-invalid': !adminUsername.valid && adminUsername.touched
+                    }">
+                  <div class="form-control-feedback"
+                    *ngIf="adminUsername.errors && (adminUsername.dirty || adminUsername.touched)">
+                    <small *ngIf="adminUsername.errors.required != null && adminUsername.errors.required" id="emailHelp"
+                      class="form-text text-danger">enter a
+                      username/email for administrator.</small>
+                    <small *ngIf="adminUsername.errors.pattern" id="emailHelp" class="form-text text-danger">enter a
+                      valid
+                      email id.</small>
+                  </div>
+                </div>
+
+              </div>
+              <div class="form-group row">
+                <label for="staticEmail" class="col-sm-4 col-form-label">Password</label>
+                <div class="col-sm-8">
+                  <input formControlName="adminPassword" type="password" class="form-control" placeholder="password"
+                    [ngClass]="{
+                    'is-invalid': !adminPassword.valid && adminPassword.touched
+                  }">
+                  <div class="form-control-feedback"
+                    *ngIf="adminPassword.errors && (adminPassword.dirty || adminPassword.touched)">
+                    <small *ngIf="adminPassword.errors.required != null && adminPassword.errors.required" id="emailHelp"
+                      class="form-text text-danger">enter a
+                      password for administrator.</small>
+                    <small *ngIf="adminPassword.errors.minlength" id="emailHelp" class="form-text text-danger">password
+                      length atlest 5 charaters</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </wizard-step>
+        <wizard-step [title]="'Step3'" (onComplete)="onComplete($event)">
+          <div [ngSwitch]="isCompleted">
+            <h2>Admin Permissions</h2>
+            <div class="form-wizard-fixedbox">
+              <div class="form-wizard-permission-controller">
+                <form>
+                  <div class="form-group row">
+                    <!-- <div class="col-md-4">
+                      <ul class="tap-disable-element">
+                        <div class="checkbox-wrap" (change)="checkBoxEventListner($event, 'admin')">
+                          <label class="custom-control fill-checkbox">
+                            <input [checked]="adminAccess.admin.all" type="checkbox" class="fill-control-input">
+                            <span class="fill-control-indicator"></span>
+                            <span class="fill-control-description"><b>Admin</b></span>
+                          </label>
+                        </div>
+                        <ul>
+                          <div class="checkbox-wrap">
+                            <label class="custom-control fill-checkbox">
+                              <input [checked]="adminAccess.admin.view"
+                                (change)="adminAccess.admin.view = !adminAccess.admin.view" type="checkbox"
+                                class="fill-control-input">
+                              <span class="fill-control-indicator"></span>
+                              <span class="fill-control-description">View</span>
+                            </label>
+                          </div>
+                        </ul>
+                        <ul>
+                          <div class="checkbox-wrap">
+                            <label class="custom-control fill-checkbox">
+                              <input [checked]="adminAccess.admin.delete"
+                                (change)="adminAccess.admin.delete = !adminAccess.admin.delete" type="checkbox"
+                                class="fill-control-input">
+                              <span class="fill-control-indicator"></span>
+                              <span class="fill-control-description">Delete</span>
+                            </label>
+                          </div>
+                        </ul>
+                        <ul>
+                          <div class="checkbox-wrap">
+                            <label class="custom-control fill-checkbox">
+                              <input [checked]="adminAccess.admin.create"
+                                (change)="adminAccess.admin.create = !adminAccess.admin.create" type="checkbox"
+                                class="fill-control-input">
+                              <span class="fill-control-indicator"></span>
+                              <span class="fill-control-description">Create</span>
+                            </label>
+                          </div>
+                        </ul>
+                      </ul>
+                    </div> -->
+                    <div class="col-md-4">
+                      <ul>
+                        <div class="checkbox-wrap" (change)="checkBoxEventListner($event, 'customer')">
+                          <label class="custom-control fill-checkbox">
+                            <input [checked]="adminAccess.customer.all" type="checkbox" class="fill-control-input">
+                            <span class="fill-control-indicator"></span>
+                            <span class="fill-control-description"><b>Customer</b></span>
+                          </label>
+                        </div>
+                        <ul>
+                          <div class="checkbox-wrap">
+                            <label class="custom-control fill-checkbox">
+                              <input [checked]="adminAccess.customer.view"
+                                (change)="adminAccess.customer.view = !adminAccess.customer.view" type="checkbox"
+                                class="fill-control-input">
+                              <span class="fill-control-indicator"></span>
+                              <span class="fill-control-description">View</span>
+                            </label>
+                          </div>
+                        </ul>
+                        <ul>
+                          <div class="checkbox-wrap">
+                            <label class="custom-control fill-checkbox">
+                              <input [checked]="adminAccess.customer.delete"
+                                (change)="adminAccess.customer.delete = !adminAccess.customer.delete" type="checkbox"
+                                class="fill-control-input">
+                              <span class="fill-control-indicator"></span>
+                              <span class="fill-control-description">Delete</span>
+                            </label>
+                          </div>
+                        </ul>
+                        <ul>
+                          <div class="checkbox-wrap">
+                            <label class="custom-control fill-checkbox">
+                              <input [checked]="adminAccess.customer.create"
+                                (change)="adminAccess.customer.create = !adminAccess.customer.create" type="checkbox"
+                                class="fill-control-input">
+                              <span class="fill-control-indicator"></span>
+                              <span class="fill-control-description">Create</span>
+                            </label>
+                          </div>
+                        </ul>
+                      </ul>
+                    </div>
+                    <div class="col-md-4">
+                      <ul>
+                        <div class="checkbox-wrap" (change)="checkBoxEventListner($event, 'feedback')">
+                          <label class="custom-control fill-checkbox">
+                            <input [checked]="adminAccess.feedback.all" type="checkbox" class="fill-control-input">
+                            <span class="fill-control-indicator"></span>
+                            <span class="fill-control-description"><b>Feedback</b></span>
+                          </label>
+                        </div>
+                        <ul>
+                          <div class="checkbox-wrap">
+                            <label class="custom-control fill-checkbox">
+                              <input [checked]="adminAccess.feedback.view"
+                                (change)="adminAccess.feedback.view = !adminAccess.feedback.view" type="checkbox"
+                                class="fill-control-input">
+                              <span class="fill-control-indicator"></span>
+                              <span class="fill-control-description">View</span>
+                            </label>
+                          </div>
+                        </ul>
+                        <ul>
+                          <div class="checkbox-wrap">
+                            <label class="custom-control fill-checkbox">
+                              <input [checked]="adminAccess.feedback.delete"
+                                (change)="adminAccess.feedback.delete = !adminAccess.feedback.delete" type="checkbox"
+                                class="fill-control-input">
+                              <span class="fill-control-indicator"></span>
+                              <span class="fill-control-description">Delete</span>
+                            </label>
+                          </div>
+                        </ul>
+                        <ul>
+                          <div class="checkbox-wrap">
+                            <label class="custom-control fill-checkbox">
+                              <input [checked]="adminAccess.feedback.create"
+                                (change)="adminAccess.feedback.create = !adminAccess.feedback.create" type="checkbox"
+                                class="fill-control-input">
+                              <span class="fill-control-indicator"></span>
+                              <span class="fill-control-description">Create</span>
+                            </label>
+                          </div>
+                        </ul>
+                      </ul>
+                    </div>
+                    <div class="col-md-4">
+                      <ul>
+                        <div class="checkbox-wrap" (change)="checkBoxEventListner($event, 'poll')">
+                          <label class="custom-control fill-checkbox">
+                            <input [checked]="adminAccess.poll.all" type="checkbox" class="fill-control-input">
+                            <span class="fill-control-indicator"></span>
+                            <span class="fill-control-description"><b>Poll</b></span>
+                          </label>
+                        </div>
+                        <ul>
+                          <div class="checkbox-wrap">
+                            <label class="custom-control fill-checkbox">
+                              <input [checked]="adminAccess.poll.view"
+                                (change)="adminAccess.poll.view = !adminAccess.poll.view" type="checkbox"
+                                class="fill-control-input">
+                              <span class="fill-control-indicator"></span>
+                              <span class="fill-control-description">View</span>
+                            </label>
+                          </div>
+                        </ul>
+                        <ul>
+                          <div class="checkbox-wrap">
+                            <label class="custom-control fill-checkbox">
+                              <input [checked]="adminAccess.poll.delete"
+                                (change)="adminAccess.poll.delete = !adminAccess.poll.delete" type="checkbox"
+                                class="fill-control-input">
+                              <span class="fill-control-indicator"></span>
+                              <span class="fill-control-description">Delete</span>
+                            </label>
+                          </div>
+                        </ul>
+                        <ul>
+                          <div class="checkbox-wrap">
+                            <label class="custom-control fill-checkbox">
+                              <input [checked]="adminAccess.poll.create"
+                                (change)="adminAccess.poll.create = !adminAccess.poll.create" type="checkbox"
+                                class="fill-control-input">
+                              <span class="fill-control-indicator"></span>
+                              <span class="fill-control-description">Create</span>
+                            </label>
+                          </div>
+                        </ul>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-md-4">
+                      <ul>
+                        <div class="checkbox-wrap" (change)="checkBoxEventListner($event, 'notice')">
+                          <label class="custom-control fill-checkbox">
+                            <input [checked]="adminAccess.notice.all" type="checkbox" class="fill-control-input">
+                            <span class="fill-control-indicator"></span>
+                            <span class="fill-control-description"><b>Notice</b></span>
+                          </label>
+                        </div>
+                        <ul>
+                          <div class="checkbox-wrap">
+                            <label class="custom-control fill-checkbox">
+                              <input [checked]="adminAccess.notice.view"
+                                (change)="adminAccess.notice.view = !adminAccess.notice.view" type="checkbox"
+                                class="fill-control-input">
+                              <span class="fill-control-indicator"></span>
+                              <span class="fill-control-description">View</span>
+                            </label>
+                          </div>
+                        </ul>
+                        <ul>
+                          <div class="checkbox-wrap">
+                            <label class="custom-control fill-checkbox">
+                              <input [checked]="adminAccess.notice.delete"
+                                (change)="adminAccess.notice.delete = !adminAccess.notice.delete" type="checkbox"
+                                class="fill-control-input">
+                              <span class="fill-control-indicator"></span>
+                              <span class="fill-control-description">Delete</span>
+                            </label>
+                          </div>
+                        </ul>
+                        <ul>
+                          <div class="checkbox-wrap">
+                            <label class="custom-control fill-checkbox">
+                              <input [checked]="adminAccess.notice.create"
+                                (change)="adminAccess.notice.create = !adminAccess.notice.create" type="checkbox"
+                                class="fill-control-input">
+                              <span class="fill-control-indicator"></span>
+                              <span class="fill-control-description">Create</span>
+                            </label>
+                          </div>
+                        </ul>
+                      </ul>
+                    </div>
+                    <div class="col-md-4">
+                      <ul>
+                        <div class="checkbox-wrap" (change)="checkBoxEventListner($event, 'profile')">
+                          <label class="custom-control fill-checkbox">
+                            <input [checked]="adminAccess.profile.all" type="checkbox" class="fill-control-input">
+                            <span class="fill-control-indicator"></span>
+                            <span class="fill-control-description"><b>Profile</b></span>
+                          </label>
+                        </div>
+                        <ul>
+                          <div class="checkbox-wrap">
+                            <label class="custom-control fill-checkbox">
+                              <input [checked]="adminAccess.profile.view"
+                                (change)="adminAccess.profile.view = !adminAccess.profile.view" type="checkbox"
+                                class="fill-control-input">
+                              <span class="fill-control-indicator"></span>
+                              <span class="fill-control-description">View</span>
+                            </label>
+                          </div>
+                        </ul>
+                        <ul>
+                          <div class="checkbox-wrap">
+                            <label class="custom-control fill-checkbox">
+                              <input [checked]="adminAccess.profile.delete"
+                                (change)="adminAccess.profile.delete = !adminAccess.profile.delete" type="checkbox"
+                                class="fill-control-input">
+                              <span class="fill-control-indicator"></span>
+                              <span class="fill-control-description">Delete</span>
+                            </label>
+                          </div>
+                        </ul>
+                        <ul>
+                          <div class="checkbox-wrap">
+                            <label class="custom-control fill-checkbox">
+                              <input [checked]="adminAccess.profile.create"
+                                (change)="adminAccess.profile.create = !adminAccess.profile.create" type="checkbox"
+                                class="fill-control-input">
+                              <span class="fill-control-indicator"></span>
+                              <span class="fill-control-description">Create</span>
+                            </label>
+                          </div>
+                        </ul>
+                      </ul>
+                    </div>
+                    <div class="col-md-4">
+                      <ul>
+                        <div class="checkbox-wrap" (change)="checkBoxEventListner($event, 'downloadResult')">
+                          <label class="custom-control fill-checkbox">
+                            <input type="checkbox" [checked]="adminAccess.downloadResult.all"
+                              class="fill-control-input">
+                            <span class="fill-control-indicator"></span>
+                            <span class="fill-control-description"><b>Download PDF</b></span>
+                          </label>
+                        </div>
+                      </ul>
+                      <ul>
+                        <div class="checkbox-wrap" (change)="checkBoxEventListner($event, 'viewResults')">
+                          <label class="custom-control fill-checkbox">
+                            <input type="checkbox" [checked]="adminAccess.viewResults.all" class="fill-control-input">
+                            <span class="fill-control-indicator"></span>
+                            <span class="fill-control-description"><b>View Results</b></span>
+                          </label>
+                        </div>
+                      </ul>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </wizard-step>
+      </form-wizard>
+    </form>
+  </div>
+</div>
+
+<ng-template #updatecontent let-modal>
+  <div class="modal-body">
+    <div class="confirmation-message">
+      <span>This Action Cannot be Reversed.<br>Do You Wish to Proceed?</span>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="modal-button-wrapper">
+      <button type="button" class="btn customer-category-btn" (click)="modal.close('cancel')">Cancel</button>
+      <button type="button" class="btn customer-category-btn" (click)="modal.close('update')">Update</button>
+    </div>
+  </div>
+</ng-template>

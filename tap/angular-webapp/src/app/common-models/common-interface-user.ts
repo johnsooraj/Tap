@@ -1,0 +1,3 @@
+interface CommonInterfaceUser {
+    existingInParentList?: boolean;
+}

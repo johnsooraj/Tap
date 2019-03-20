@@ -1,0 +1,13 @@
+<div id="tableSearchBar">
+  <form class="form-inline">
+    <div class="input-group input-group-rounded">
+      <div class="input-group-prepend" (click)="filterTableData()">
+        <span class="input-group-text"> <i class="fa fa-search" aria-hidden="true"></i></span>
+      </div>
+      <input type="text" class="form-control" placeholder="Search" [formControl]="searchText"/>
+      <select id="searchField" class="form-control" name="searchField" [formControl]="searchField">
+        <option *ngFor="let searchOption of searchOptions" value="{{ searchOption }}">{{ searchOption }}</option>
+      </select>
+    </div>
+  </form>
+</div>

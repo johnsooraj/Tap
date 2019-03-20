@@ -1,0 +1,207 @@
+<div class="resultContainer">
+  <div class="resultWrapper" *ngFor="let data of subscriptionResults">
+    <div class="wrapperHeader">
+      <div class="resultType">{{ data.pollId ? 'Poll' : 'Feedback Group' }}</div>
+      <div class="resultText">
+        <span>{{ data.pollText ? data.pollText : data.feedbackFormName }}</span><br>
+        <span *ngIf="!data.pollId" class="feedback-list-date">{{ data.createDate | date:'short'}}</span>
+        <a *ngIf="data.pollId" (click)="prepareAndOpenModal(content, data)">View Detailed Report</a>
+      </div>
+    </div>
+    <div class="wrapperBody">
+      <div *ngIf="data.pollId" class="canvas-container">
+        <canvas id="{{ data.pollId ? 'pollGraph1' + data.pollId : 'feedGraph1' + data.feedbackId }}"></canvas>
+      </div>
+      <div *ngIf="data.feedbackFormName" class="canvas-contanier">
+        <div *ngFor="let item of data.feedbacks">
+          <div class="list-feedbacks">
+            <div class="container">
+              <div class="row">
+                <ul>
+                  <span (click)="prepareAndOpenModal(content, item)"
+                    class="feedback-list-comm feedback-list-title"><b><a>{{item.feedbackText}}</a></b></span>
+                  <span
+                    class="feedback-list-comm feedback-list-type">({{item.feedbackType == 2 ? 'Multiple Options' : item.feedbackType == 4 ? 'Free Comments' : item.feedbackType == 3 ? 'Rating Options' : ''}})</span>
+                  <span class="feedback-list-comm feedback-list-date">{{item.createDate  | date: 'short' }}</span>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="result-pagination">
+    <ngb-pagination [collectionSize]="totalCount" (pageChange)="pageChangeEvent($event)" [(page)]="currentPage"
+      aria-label="Default pagination"></ngb-pagination>
+  </div>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <div class="modalWrapperHeader">
+      <div class="resultType">{{ displayCommonData.pollId ? 'Poll' : 'Feedback' }}</div>
+      <div class="resultText">
+        <span>{{ displayCommonData.pollText ? displayCommonData.pollText : displayCommonData.feedbackText }}</span>
+        <h5 class="modal-title" id="modal-basic-title">Detailed Report</h5>
+      </div>
+    </div>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="container">
+      <div class="row" *ngIf="displayListData.optionType != 4">
+        <div class="canvas-container-modal">
+          <canvas
+            id="{{ displayCommonData.pollId ? 'pollGraph2' + displayCommonData.pollId : 'feedGraph2' + displayCommonData.feedbackId }}"></canvas>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <h5>Options And Responses</h5>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="tap-tbl tap-tbl-header">
+            <div *ngIf="
+                (displayCommonData.pollType && displayCommonData.pollType == 5) ||
+                (displayCommonData.feedbackType && displayCommonData.feedbackType == 5)
+              ">
+              <div class="polls-option-container">
+                <div class="poll-image-container">
+                  <div class="poll-image-holder"><img src="{{ displayCommonData.pollImages[0].imageURL }}" /></div>
+                  <div class="poll-image-holder"><img src="{{ displayCommonData.pollImages[1].imageURL }}" /></div>
+                  <div class="poll-image-holder"><img src="{{ displayCommonData.pollImages[2].imageURL }}" /></div>
+                  <div class="poll-image-holder"><img src="{{ displayCommonData.pollImages[3].imageURL }}" /></div>
+                </div>
+              </div>
+            </div>
+            <table *ngIf="
+                (displayCommonData.pollType && displayCommonData.pollType == 3) ||
+                (displayCommonData.feedbackType && displayCommonData.feedbackType == 3)
+              " cellpadding="5" cellspacing="5" border="0">
+              <thead>
+                <tr>
+                  <th>Option</th>
+                  <th>Count</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><i class="fa fa-star" aria-hidden="true"></i></td>
+                  <td>{{ displayListData.rateCounts[0] }}</td>
+                </tr>
+                <tr>
+                  <td><i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i></td>
+                  <td>{{ displayListData.rateCounts[1] }}</td>
+                </tr>
+                <tr>
+                  <td>
+                    <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                  </td>
+                  <td>{{ displayListData.rateCounts[2] }}</td>
+                </tr>
+                <tr>
+                  <td>
+                    <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i>
+                  </td>
+                  <td>{{ displayListData.rateCounts[3] }}</td>
+                </tr>
+                <tr>
+                  <td>
+                    <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                  </td>
+                  <td>{{ displayListData.rateCounts[4] }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <table *ngIf="
+                (displayCommonData.pollType && displayCommonData.pollType == 2) ||
+                (displayCommonData.feedbackType && displayCommonData.feedbackType == 2)
+              " cellpadding="5" cellspacing="5" border="0">
+              <thead>
+                <tr>
+                  <th>Option</th>
+                  <th>Count</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of displayCommonData.questions">
+                  <td>{{ item.optionText }}</td>
+                  <td>{{ item.responses.length }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="displayListData.optionType != 4">
+        <div class="col-md-12">
+          <h5>Responded Users</h5>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="displayListData.optionType != 4">
+        <div class="col-md-12">
+          <div class="tap-tbl tap-tbl-header">
+            <table cellpadding="5" cellspacing="5" border="0">
+              <thead>
+                <tr>
+                  <th>Customer Name</th>
+                  <th>Respond Date</th>
+                  <th>Option Number</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of displayListData.optionsRespons">
+                  <td>{{ item.responderName }}</td>
+                  <td>{{ item.createDate | date: 'short' }}</td>
+                  <td>{{ item.optionNumber }}</td>
+                  <td>{{ item.status == 0 ? 'Active' : 'Deactive' }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="displayListData.optionType == 4">
+        <div class="col-md-12">
+          <div class="tap-tbl tap-tbl-header">
+            <table cellpadding="5" cellspacing="5" border="0">
+              <thead>
+                <tr>
+                  <th>Customer Name</th>
+                  <th>Comment</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of displayListData.optionsRespons">
+                  <td>{{ item.responderName }}</td>
+                  <td>{{ item.commentText }}</td>
+                  <td>{{ item.createDate | date: 'short' }}</td>
+                  <td>{{ item.status == 0 ? 'Active' : 'Deactive' }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+  </div>
+</ng-template>

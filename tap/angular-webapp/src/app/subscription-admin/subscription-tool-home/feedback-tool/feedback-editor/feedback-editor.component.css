@@ -1,0 +1,136 @@
+.feebackWrapper {
+  width: 90%;
+  margin: 15px auto;
+  padding: 10px;
+}
+
+.feedbackHeader {
+  width: 100%;
+  /* display: flex;
+  align-items: center; */
+  margin-bottom: 10px;
+}
+
+.feedbackName {
+  width: 30%;
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.feedbackfield {
+  border: 1px solid #969696;
+  border-radius: 15px;
+}
+
+.feedbackfield legend {
+  width: auto;
+  min-width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.feedbackLegendContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.feedbackQueBtn {
+  width: 35%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.feedbackQueBtn i {
+  color: #1488f5;
+  margin-right: 5px;
+}
+
+.feedbackQueBtn.commonBtn i,
+.feedbackQueBtn.commonBtn:focus i {
+  color: #1488f5 !important;
+}
+
+.feedbackQueBtn.commonBtn:active i,
+.feedbackQueBtn.commonBtn:hover i {
+  color: #fff !important;
+}
+
+.feedbackLegendContainer hr {
+  border-top: 1px solid #969696;
+  width: 30%;
+}
+
+.feedbackQueContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.feedbackPaginationBtn {
+  width: 15%;
+  cursor: pointer;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+
+.feedbackPaginationBtn i {
+  color: #1488f5;
+  font-size: 50px;
+}
+
+.feedbackPaginationControl {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.feedbackBtnContainer {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 10px;
+}
+
+.feedbackBtnContainer .commonBtn {
+  width: 150px;
+  text-transform: none;
+}
+
+.feedbackFormContainer {
+  width: 70%;
+  min-height: 325px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #1488f5;
+}
+
+.feedbackGroupContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+/* feedbackOptionsTabset style in styles.css */
+
+.feedbackQue {
+  margin-bottom: 10px;
+}
+
+.feedbackOptionsContainer {
+  margin-top: 10px;
+}
+
+.feedbackOptionsContainer .feedbackQueBtn {
+  width: 170px;
+  margin: 10px auto;
+}
+
+.feedbackMultipleOptionsContainer {
+  width: 85%;
+  margin: auto;
+}

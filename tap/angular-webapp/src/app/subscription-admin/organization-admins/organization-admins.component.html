@@ -1,0 +1,32 @@
+<div class="admin-main-container">
+  <div class="admin-top-button-panel">
+    <a (click)="adminstratorPanel('add')" class="commonBtn"
+      [ngClass]="{ commonBtnActive: closedService.showAddAdmin }">Add New Admin</a>
+    <a (click)="adminstratorPanel('edit')" class="commonBtn"
+      [ngClass]="{ commonBtnActive: closedService.showEditAdmin }">View/Edit Admin Privileges</a>
+    <a (click)="openRemoveAdminModel(deletecontent)" class="commonBtn">Remove Admin</a>
+  </div>
+  <div class="admin-body-panel">
+    <app-add-administrator *ngIf="closedService.showAddAdmin"></app-add-administrator>
+    <app-view-administrator *ngIf="closedService.showEditAdmin"></app-view-administrator>
+  </div>
+</div>
+
+
+
+
+<ng-template #deletecontent let-modal>
+  <div class="modal-body">
+    <p>
+      <strong>Are you sure you want to delete <span class="text-primary">admin</span>?</strong>
+    </p>
+    <p>
+      All information associated to this admin will be permanently deleted.
+      <span class="text-danger">This operation can not be undone.</span>
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="commonBtn" (click)="modal.close('cancel')">Cancel</button>
+    <button type="button" class="commonBtn red" (click)="modal.close('delete')">Delete</button>
+  </div>
+</ng-template>

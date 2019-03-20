@@ -1,0 +1,25 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Tapwebapp</title>
+<base th:href="@{/}">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/x-icon"
+	th:href="@{/favicon.ico}">
+</head>
+<body>
+	<app-root></app-root>
+	<script type="text/javascript"
+		th:src="@{/runtime.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/polyfills.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/styles.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/vendor.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/main.js}"></script>
+</body>
+</html>

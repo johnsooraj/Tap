@@ -1,0 +1,115 @@
+<div class="feebackWrapper">
+  <form [formGroup]="feedbackGroupFormGroup" novalidate>
+    <div class="feedbackHeader">
+      <div class="row">
+        <div class="col-md-3"><span class="feedbackName">Feedback Form Name: </span></div>
+        <div class="col-md-6">
+          <input type="text" class="form-control"
+            [ngClass]="{ 'is-invalid' : !feedbackGroupFormGroup.get('feedbackFormName').valid && feedbackGroupFormGroup.get('feedbackFormName').touched}"
+            placeholder="Feedback Form Name" formControlName="feedbackFormName" />
+        </div>
+        <div class="col-md-3">
+          <div class="input-group">
+            <input class="form-control" placeholder="expiry date" formControlName="exprieDate" name="dp"
+              placement="bottom" ngbDatepicker #d="ngbDatepicker" />
+            <div class="input-group-append">
+              <button class="btn btn-outline-primary calendar fa fa-calendar" (click)="d.toggle()"
+                type="button"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <fieldset class="feedbackfield">
+      <legend>
+        <div class="feedbackLegendContainer">
+          <div class="feedbackQueBtn commonBtn" (click)="addSingleFeedback()">
+            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+            <span class="new-feedback-text">Add New Question ({{
+              feedbackGroupFormGroup['controls'].feedbacks['controls'].length }})</span>
+          </div>
+          <hr />
+          <div class="feedbackQueBtn commonBtn" (click)="removeFeedback(queNumber)">
+            <i class="fa fa-minus-circle" aria-hidden="true"></i>
+            <span class="new-feedback-text">Remove This Question</span>
+          </div>
+        </div>
+      </legend>
+
+      <div class="feedbackQueContainer" formArrayName="feedbacks">
+        <span class="feedbackPaginationBtn"><i class="fa fa-chevron-circle-left" aria-hidden="true"
+            [hidden]="queNumber <= 0" (click)="gotoQuestion(queNumber - 1)"></i></span>
+
+        <div class="feedbackFormContainer"
+          *ngFor="let feed of feedbackGroupFormGroup['controls'].feedbacks['controls']; let iFeed = index"
+          [@showHide]="queNumber === iFeed ? 'show' : 'hide'">
+          <div class="feedbackGroupContainer" formGroupName="{{ iFeed }}">
+            <div class="feedbackQue">
+              <input type="text" class="form-control" placeholder="{{ 'Feedback Question ' + (iFeed + 1) }}"
+                formControlName="feedbackText" [ngClass]="{
+                  'is-invalid' : !feed.get('feedbackText').valid && feed.get('feedbackText').touched
+                }" />
+            </div>
+            <ngb-tabset id="feedbackTapElemnt{{ iFeed }}" #feedbackOptionsTabset{{iFeed}}
+              [orientation]="ngTabOptions.orientation" [justify]="ngTabOptions.justify"
+              (tabChange)="feedbackOptionChange($event, iFeed)">
+              <ngb-tab id="multipleoption{{ iFeed }}" title="Multiple Options">
+                <ng-template ngbTabContent>
+                  <div class="feedbackOptionsContainer" formArrayName="questions">
+                    <div class="feedbackQueBtn commonBtn" (click)="addSngleOptionToFeedbackArray(iFeed)">
+                      <i class="fa fa-plus" aria-hidden="true"></i>
+                      <span>Add Option ({{ feed['controls'].questions['controls'].length }})</span>
+                    </div>
+                    <div *ngFor="let quest of feed['controls'].questions['controls']; let iquest = index">
+                      <div class="feedbackMultipleOptionsContainer" formGroupName="{{ iquest }}">
+                        <div class="form-group">
+                          <div class="input-group">
+                            <input type="text" class="form-control" placeholder="{{ 'Option ' + (iquest + 1) }}"
+                              formControlName="optionText" [ngClass]="{
+                                'is-invalid' : !quest.get('optionText').valid && quest.get('optionText').touched
+                              }" />
+                            <div class="input-group-append">
+                              <button type="button" class="btn btn-outline-danger fa fa-times"
+                                (click)="removeFeedbackOption(iFeed, iquest)"></button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+              </ngb-tab>
+              <ngb-tab id="ratingoption{{ iFeed }}" title="Rating Option">
+                <ng-template ngbTabContent>
+                  <!-- <div class="feedbackOptionsContainer"><span>Rating Option</span></div> -->
+                </ng-template>
+              </ngb-tab>
+              <ngb-tab id="freecommentoption{{ iFeed }}" title="Free Comment">
+                <ng-template ngbTabContent>
+                  <!-- <div class="feedbackOptionsContainer"><span>Free Comment</span></div> -->
+                </ng-template>
+              </ngb-tab>
+            </ngb-tabset>
+          </div>
+        </div>
+
+        <span class="feedbackPaginationBtn"><i class="fa fa-chevron-circle-right" aria-hidden="true" [hidden]="
+              feedbackGroupFormGroup['controls'].feedbacks['controls'].length <= 1 ||
+              queNumber === feedbackGroupFormGroup['controls'].feedbacks['controls'].length - 1
+            " (click)="gotoQuestion(queNumber + 1)"></i></span>
+      </div>
+
+      <div class="feedbackPaginationControl">
+        <!-- Pagination -->
+      </div>
+
+      <div class="feedbackBtnContainer">
+        <input type="button" id="cancel" class="commonBtn" value="Cancel" (click)="feedbackEditorButtonEvent($event)" />
+        <input type="button" id="draft" class="commonBtn" value="Save as Draft"
+          (click)="feedbackEditorButtonEvent($event)" />
+        <input type="button" id="finish" class="commonBtn" value="Save and Finish"
+          (click)="feedbackEditorButtonEvent($event)" />
+      </div>
+    </fieldset>
+  </form>
+</div>

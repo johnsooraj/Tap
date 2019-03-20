@@ -1,0 +1,64 @@
+This Project Use Google Firebase for the notifications.	https://firebase.google.com/
+
+Step 1 : We Created a new gmail id to login to firebase console
+		'developer.letztap@gmail.com'
+		
+		Open : https://firebase.google.com/
+		Singin with email and password
+		Click on GO TO CONSOLE
+		It will list out our projects. choose our project Eg: 'TapFCM'
+
+Step 2 : Click Setting On 'Project Overview' Top Left Side 
+		Choose Project Settings
+		
+Step 3 : This will open out projects setting and details view
+		 NB:At the bottom of page we can delete current project
+		 
+Step 4 : There will be a options to add Firebase to our projects (ios, android, web)
+
+NB: Following steps are used for web notifications.
+	Android and ios will add later, Almost all are same.
+
+Step 5 : Click on Cloud Messaging
+
+Working Of Firebase: 
+	We are creating a SERVER IN FIRBASE CONSOLE, the server key will found in Cloud Messaging Tap.
+	This server will send notifications to our every client
+	So On ANDROID, IOS, and WEB we are creating the receiver 
+	The receiver is Registering that client to SERVER by passing 'apiKey','messagingSenderId' and other details.
+	In our java project we create the http request to the FIREBASE SERVER.
+	
+	Http Request From Java To -> FCM Server -> FCM Client
+	
+	Http Request Structure(below): url 'https://fcm.googleapis.com/fcm/send'
+	
+	POST /fcm/send HTTP/1.1
+	Host: fcm.googleapis.com
+	Content-Type: application/json
+	Authorization: key=AIzaSyAD5VhH8zHuJfy1FLtg5LSGZP86cr0fuZg	// This key is 'Legacy server key' in Cloud Messaging Tab
+	Cache-Control: no-cache
+	Postman-Token: b2b80f59-ddb0-47cf-901c-5d25f1b453c7
+
+	{
+	"to" : "/topics/hello",		// Example of Sending Notification To multiple users those subscribe 'hello', read Step 6.
+	"notification":{
+		"title":"postman",
+		"body":"Hello World2",
+		"icon":"https://s3.ap-south-1.amazonaws.com/letztapcyspan/profile/bigIcon/ea2c4f6c-73d4-48a6-b308-e1f9d76257dd4324412411293877221.png"
+	}
+	}
+
+Step 6 : Notifications can send by 2 methods
+		One is Send To a specific user with that user unique id.	// Step 7 : How to craete unique id
+		Two is Send To a group of users with topic that they are subscribed // Step 8 : How to subscribe to a topic
+		
+Step 7 : 
+		Web Notifications:
+		Click on 'Add Firebase to your web app' in firebase console -> settings -> general
+		NB: i am not adding code to this page, this process is very simple
+	
+Step 8 : 
+		After creating the token, we send a POST Request to firebase for subscribe.
+		with Token and Topic name.
+		Eg: 'https://iid.googleapis.com/iid/v1/' + token + '/rel/topics/' + topic'
+		after the successful post request the notifications can send to the user, like step 5 hhtp request 

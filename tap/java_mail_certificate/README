@@ -1,0 +1,32 @@
+This project using an 'office365' mail server
+
+By default Java mail does not have the certificate for office365, So we have to add a new certificate to our JRE.
+
+For windows & linux machine,
+
+1. Locate 'C:\Program Files\Java\jre1.8.0_161\lib\security'
+	"cacerts" is the file holds certificates
+
+2. Open CMD on the above directory and check the default certificates
+	paste and run - 
+		'keytool -list -keystore cacerts' NB: no need to enter password.
+note : '104 is the default count of certificates'
+
+3. 'office365-Security-Certificate.cer' is the Certificate needed to add JRE Security.
+
+	3.1 Save the .cre file from our SVN.
+
+	note: 	This certificate file is generate by openssl command, (it will take some time to generate!)
+			if the .cre file missing, you can create by using below command
+			'openssl s_client -connect smtp.office365.com:587 -starttls smtp > office365-Security-Certificate.cer'
+
+4. Open the directory :  'C:\Program Files\Java\jre1.8.0_161\lib\security' and Open CMD(same cmd of step2), 
+	then paste and run the following single line command.
+	
+	"keytool -import -trustcacerts -keystore cacerts -storepass changeit -noprompt -alias smtp.office365.com -file **path to certificate file**\**filename**.cer"
+	
+	Sample Code:
+	'keytool -import -trustcacerts -keystore cacerts -storepass changeit -noprompt -alias smtp.office365.com -file C:\Users\John\Downloads\office365-Security-Certificate.cer.cer'
+
+5. To Confirm please list all certificate(step 2) total number will change to 105.
+

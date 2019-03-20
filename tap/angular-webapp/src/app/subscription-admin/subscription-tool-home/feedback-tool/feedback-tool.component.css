@@ -1,0 +1,21 @@
+.subscription-tool-top {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.scrollTable {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.scrollTable tbody {
+  height: calc(100vh - 220px);
+}
+
+.scrollTable th, .scrollTable td {
+  width: 19%;
+}

@@ -1,0 +1,85 @@
+.customer-panel {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.scrollTable {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.scrollTable tbody {
+  height: calc(100vh - 205px);
+}
+
+.scrollTable th {
+  width: 32%;
+}
+
+.scrollTable td {
+  width: 32%;
+}
+
+.add-customer-container {
+  width: 100%;
+  height: 300px;
+  background-color: rgb(255, 255, 255);
+  position: relative;
+}
+
+.add-customer-wrapper {
+  width: 400px;
+  top: 50%;
+  margin-left: -200px;
+  margin-top: -100px;
+  text-align: center;
+  left: 50%;
+  position: absolute;
+  justify-content: center;
+  align-self: center;
+}
+
+.add-customer-wrapper .form-control {
+  width: 350px;
+  border: 0;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 20px;
+  box-shadow: none;
+  border-radius: 0;
+  padding-left: 0;
+  display: inline-block;
+}
+
+.add-customer-wrapper .input-icons {
+  display: inline-block;
+  margin-right: 10px;
+  font-size: 20px;
+  color: rgb(158, 158, 158);
+}
+
+.add-customer-wrapper input[text] {
+  color: rgb(158, 158, 158);
+  font-size: 18px;
+}
+
+.add-customer-wrapper .or-separtor {
+  color: rgb(158, 158, 158);
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.error-window{
+  background-color: #fce4e4;
+  border: 1px solid #cc0033 !important;
+  outline: none;
+}

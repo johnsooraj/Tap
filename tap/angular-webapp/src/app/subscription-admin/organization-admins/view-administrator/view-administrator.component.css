@@ -1,0 +1,65 @@
+.searchBarContainer {
+  display: flex;
+  justify-content: flex-end;
+  width: 90%;
+  margin: 0 auto;
+  margin-bottom: 10px;
+}
+
+.scrollTable {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.scrollTable tbody {
+  height: calc(100vh - 195px);
+}
+
+.scrollTable th, .scrollTable td {
+  width: 30%;
+}
+
+.confirmation-message {
+  height: 100px;
+  text-align: center;
+  padding: 20px;
+}
+
+.confirmation-message span {
+  word-wrap: break-word;
+  font-size: 20px;
+}
+
+/* .customer-category-btn {
+  padding: 5px 40px;
+  border-radius: 20px;
+  margin: 10px 30px;
+  text-decoration: none;
+  color: #000;
+  background-color: #fff;
+  text-transform: capitalize;
+  border: 1px solid #ccc;
+  display: inline-block;
+}
+
+.customer-category-btn:active {
+  outline: none;
+  border: none;
+  color: #fff;
+}
+
+.customer-category-btn:focus {
+  outline: none !important;
+}
+
+.customer-category-btn:hover,
+.customer-category-btn:focus {
+  color: #fff;
+  background-color: #1488f5;
+  border: 1px solid #1488f5;
+} */
+
+.modal-button-wrapper {
+  width: 100%;
+  text-align: center;
+}

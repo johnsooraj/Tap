@@ -1,0 +1,54 @@
+<div class="side-nav desktop-side-nav">
+  <div class="sideNavOrgstn">
+    <a routerLink="./edit-profile"
+      ><span class="sideNavOrgstnImage" *ngIf="organizationPhoto && organizationPhoto !== ''"
+        ><img [src]="organizationPhoto" class="roundImgWrpr"/></span
+      ><span class="dummyImgWrpr" *ngIf="!organizationPhoto || organizationPhoto === ''"
+        ><i class="fa fa-building" aria-hidden="true"></i></span
+    ></a>
+    <span class="sideNavOrgstnName">
+      <a routerLink="./edit-profile">{{ organizationName | truncate: 25 }}</a>
+    </span>
+  </div>
+  <ul>
+    <li>
+      <a routerLink="./customer-managament" routerLinkActive="active"
+        ><i class="fa fa-users" aria-hidden="true"></i>&nbsp;Customer management</a
+      >
+    </li>
+    <li>
+      <a routerLink="./subscription-tools" routerLinkActive="active"
+        ><i class="fa fa-podcast" aria-hidden="true"></i>&nbsp;Subscription Tools</a
+      >
+    </li>
+    <li>
+      <a routerLink="./download-results" routerLinkActive="active"
+        ><i class="fa fa-download" aria-hidden="true"></i>&nbsp;View/Download results</a
+      >
+    </li>
+    <li *ngIf="showAdminLink">
+      <a routerLink="./admin" routerLinkActive="active"><i class="fa fa-unlock-alt" aria-hidden="true"></i>&nbsp;Admin</a>
+    </li>
+  </ul>
+  <div class="side-nav-tap"><img src="assets/images/lg.png" /></div>
+</div>
+
+<div class="headerBar">
+  <span class="headerTap">Customer Management Panel</span>
+  <div class="headerUser" [ngbPopover]="userMenu" placement="bottom-right" popoverClass="userMenu">
+    <span class="headerUserImage" *ngIf="userPhoto && userPhoto !== ''"><img [src]="userPhoto" class="roundImgWrpr"/></span
+    ><span class="dummyImgWrpr" *ngIf="!userPhoto || userPhoto === ''"><i class="fa fa-user" aria-hidden="true"></i></span>
+    <span class="headerUserName">{{ userDisplayName | truncate: 25 }}</span>
+  </div>
+</div>
+
+<ng-template #userMenu>
+  <div class="userMenuTop">
+    <span class="userMenuImage" *ngIf="userPhoto && userPhoto !== ''"><img [src]="userPhoto" class="largeRoundImgWrpr"/></span
+    ><span class="largeDummyImgWrpr" *ngIf="!userPhoto || userPhoto === ''"><i class="fa fa-user fa-3x" aria-hidden="true"></i></span>
+    <span class="userMenuName"> {{ userDisplayName }} </span>
+  </div>
+  <div class="userMenuBottom">
+    <a class="commonBtn" routerLink="#" (click)="logout()">Logout</a>
+  </div>
+</ng-template>

@@ -1,0 +1,56 @@
+<div class="subscription-tool-top">
+  <a routerLink="0" *ngIf="loginService.createFeedbackAccess()" class="commonBtn">New Form</a>
+  <a (click)="removeSlectedFeedbacks(deletefeedback)" *ngIf="loginService.deleteFeedbackAccess()" class="commonBtn">Remove Feedback</a>
+</div>
+
+<table class="scrollTable">
+  <thead>
+    <tr>
+      <th class="chkBox">
+        <label class="custom-control fill-checkbox">
+          <input (change)="checkBoxEvent($event, 'selectAll')" type="checkbox" class="fill-control-input" />
+          <span class="fill-control-indicator"></span>
+        </label>
+      </th>
+      <th>Feedback Form Name</th>
+      <th>Feedback Count</th>
+      <th>Created On</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of feedbackList; let i = index">
+      <td class="chkBox">
+        <label class="custom-control fill-checkbox">
+          <input [checked]="data.checkboxStatus" (change)="data.checkboxStatus = !data.checkboxStatus" type="checkbox"
+            class="fill-control-input" />
+          <span class="fill-control-indicator"></span>
+        </label>
+      </td>
+      <td>
+        <a (click)="fetchFeedbackById(data)">{{ data.feedbackFormName }}</a>
+      </td>
+      <td>
+        {{ data.feedbacks.length }}
+      </td>
+      <td>{{ data.createDate | date: 'short' }}</td>
+      <td>{{ data.status == 1 ? 'finished' : data.status == 0 ? 'draft' : 'not avilable' }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<ng-template #deletefeedback let-modal>
+  <div class="modal-body">
+    <p>
+      <strong>Are you sure you want to delete <span class="text-primary">feedback</span>?</strong>
+    </p>
+    <p>
+      All information associated to this feedback will be permanently deleted.
+      <span class="text-danger">This operation can not be undone.</span>
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="commonBtn" (click)="modal.dismiss('cancel')">Cancel</button>
+    <button type="button" ngbAutofocus class="commonBtn red" (click)="modal.close('delete')">Delete</button>
+  </div>
+</ng-template>

@@ -1,0 +1,44 @@
+.addAdminModalBody{
+    height: 400px;
+}
+
+.addAdminModalBody{
+    overflow-y: scroll;
+}
+
+.addAdminModalBody ul {
+    padding: 10px;
+}
+
+.addAdminModalBody li {
+    display: flex;
+}
+
+.modal-footer-addAdmin{
+    width: 100%;
+    justify-content: space-between;
+    display: flex;
+}
+
+.modal-footer-addAdmin a {
+    color: #2b48ec;
+    cursor: pointer;
+}
+
+.modal-button-wrapper {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  .confirmation-message {
+    height: 100px;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .confirmation-message span {
+    word-wrap: break-word;
+    font-size: 20px;
+  }

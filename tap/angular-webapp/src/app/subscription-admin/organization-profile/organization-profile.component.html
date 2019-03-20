@@ -1,0 +1,60 @@
+<div class="organization-profile-warpper">
+  <div class="profile-container">
+    <div class="profile-header">
+      <div class="top-searchbar">
+        <div class="page-view-header">
+          <a href="#" class="page-title">Profile</a>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+    <div class="profile-body">
+      <div class="profile-form-control">
+        <form>
+          <div class="org-profile-coverpic">
+            <div class="profile-holder-commom profile-coverpic-holder">
+              <img id="coverpicture" src="{{coverPicUrl}}" alt="coverpicture">
+              <div class="image-chooser" (click)="openFileChooser('cover')">
+                <span><i class="fa fa-camera" aria-hidden="true"></i></span>
+              </div>
+              <input #profileCoverFileInput (change)="profileCoverPictureChange($event)" style="display: none;" type="file">
+            </div>
+            <div class="profile-profile-holder">
+              <img id="profilepicture" src="{{profilePicUrl}}" alt="profilepic">
+              <div class="image-chooser" (click)="openFileChooser('profile')">
+                <span><i class="fa fa-camera" aria-hidden="true"></i></span>
+              </div>
+              <input #profileProfileFileInput (change)="profileProfilePictureChange($event)" style="display: none;" type="file">
+            </div>
+          </div>
+          <div class="org-profile-title">
+            <div class="profile-title-container">
+              <input id="organizatioTitleInput" class="profileInputText" [(ngModel)]="this.commonService.userData.organization.organizationName" type="text"
+                name="organizationname">
+            </div>
+          </div>
+          <div class="org-profile-details">
+            <div class="profile-details-container">
+              <div class="profile-details-con1">
+                <input id="organizatioWebsiteInput" placeholder="website" class="profileInputText" [(ngModel)]="myOrg.organizationAddress.website" type="text"
+                  name="organizationwebsite">
+              </div>
+              <div class="profile-details-con2">
+                <input id="organizatioPhoneInput" placeholder="phone" class="profileInputText" [(ngModel)]="myOrg.organizationAddress.contact_number" type="text"
+                  name="organizationphone">
+              </div>
+            </div>
+          </div>
+          <div class="org-prifle-aboutus">
+            <div class="profile-holder-commom profile-aboutus-holder">
+              <textarea name="aboutus" [(ngModel)]="myOrg.organizationAddress.description" placeholder="About us" data-gramm_editor="false"></textarea>
+            </div>
+          </div>
+          <div class="org-profile-submit">
+            <input type="button" (click)="onsubmitButtonClick()" class="customer-category-btn" value="update">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
